@@ -1,0 +1,128 @@
+tags:
+  name: AppUser
+  description: AppUser Management
+
+components:
+   schemas:
+     AppUser:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+           description: User Id
+         name:
+           type: string
+           format: string
+         email:
+           type: string
+           format: email
+         emailVerified:
+           type: boolean
+         phoneNumber1:
+           type: string
+           format: string
+         phoneNumber2:
+           type: String
+           format: String
+         photoUrl:
+           type: string
+         gallery:
+           type: Array
+         address1:
+           type: String
+         address2:
+           type: String
+         openingDay:
+           type: String
+           format: Date
+         closingDay:
+           type: String
+           format: Date
+         openingTime:
+           type: String
+           format: Date
+         closingTime:
+           type: String
+           format: Date
+         gelocation:
+           type: String
+         createdAt:
+           type: string
+           format: date-time
+           description: Record created date time
+         updatedAt:
+           type: string
+           format: date-time
+           description: Record updated date time
+
+paths:
+  /app-admin-info:
+    get:
+      tags:
+        - AppUser
+      summary: AppUser Details
+      description: Get AppUser Details
+      produces:
+        - application/json
+      parameters:
+        - name: tenantId
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: App User Info
+        404:
+          description: No Info Found
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /app-admin-info/{infoId}:
+    put:
+      tags:
+        - AppUser
+      summary: update AppUser details
+      produces:
+        - application/json
+      parameters:
+        - name: tenantId
+          in: query
+          required: true
+          type: string
+        - name: infoId
+          description: Id of appUser
+          in: path
+          required: true
+          type: string
+      requestBody:
+        description: Add Category
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                in: body
+                type: string
+              name:
+                description: phoneNumber of user
+                in: body
+                type: string
+              phoneNumber1:
+                in: body
+                type: string
+              phoneNumber2:
+                in: body
+                type: string
+      responses:
+        200:
+          description: AppUser Info Updated Successfully
+        404:
+          description: AppInfo not Found
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []

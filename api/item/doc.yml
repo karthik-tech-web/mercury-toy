@@ -1,0 +1,362 @@
+tags:
+  name: Item
+  description: Item management
+
+components:
+   schemas:
+     Item:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+           description: ItemId
+         name:
+           type: string
+           format: string
+           description: name of the Item
+         description:
+           type: string
+           format: string
+           description: description of the Item
+         image:
+           type: string
+           format: string
+           description: image of the Item
+         price:
+           type: number
+           format: number
+           description: Price of Item
+         foodType:
+           type: number
+           format: number
+           description: type of food //1.Veg 2.NonVeg 3.Egg
+         availableType:
+           type: number
+           format: number
+           description: availableType of Item // 1.always available 2.available in selected time
+         status:
+           type: number
+           format: number
+           description: status of Item
+         categoryId:
+           type: string
+           format: ObjectId
+           description: categoryId of Item
+           $ref: '#/components/schemas/Category'
+         subCategoryId:
+           type: string
+           format: ObjectId
+           description: categoryId of Item
+           $ref: '#/components/schemas/Category'
+         includeGst:
+           type: Boolean
+           description: Item include Gst or Not
+         enable:
+           type: Boolean
+           description: Item enable Type
+         createdBy:
+           type: string
+           format: string
+           description: created userId
+           $ref: '#/components/schemas/User'
+         createdAt:
+           type: string
+           format: date-time
+           description: Record created date time
+         updatedAt:
+           type: string
+           format: date-time
+           description: Record last updated date time
+       example:
+          _id: 3453543453453fddfbdfb
+          name: Veg Rice
+          description: test item
+          price: 100
+          foodType: 1
+          availableType: 1
+          status: 1
+          categoryId: 62a4215df20d58f0b84d109b
+          subCategoryId: null
+          includeGst: true
+          enable: true
+          createdBy: 5f8e8aec08f60970124cc24f
+          createdAt: '2022-12-13T10:31:02.583+00:00'
+          updatedAt: '2022-12-13T10:31:02.583+00:00'
+
+paths:
+  /item:
+    post:
+      tags:
+        - Item
+      summary: create Item
+      description: Add a Item
+      produces:
+        - application/json
+      requestBody:
+        description: Add Item
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                description: item Name
+                in: body
+                required: true
+                type: string
+                example: test item
+              description:
+                description: description
+                in: body
+                required: true
+                type: string
+                example: description
+              price:
+                description: categoryType
+                in: body
+                required: true
+                type: number
+                example: 100
+              foodType:
+                description: postId
+                in: body
+                required: true
+                type: number
+                example: 1
+              availableType:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: fhgfhfg6876876876876
+              categoryId:
+                description: categoryId
+                in: body
+                required: true
+                type: string
+                example: fhgfhfg6876876876876
+              subCategoryId:
+                description: categoryType
+                in: body
+                type: string
+                example: null
+              includeGst:
+                description: includeGst
+                in: body
+                required: true
+                type: boolean
+                example: true
+              enable:
+                description: enable
+                in: body
+                required: true
+                type: boolean
+                example: true
+              status:
+                description: status
+                in: body
+                required: true
+                type: number
+                example: 1
+              createdBy:
+                in: body
+                required: true
+                type: string
+                example: 61c30ba30db86c001beaf395
+      responses:
+        200:
+          description: Item added Successfully 
+        400:
+          description: Something went Wrong. Please Try again later.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+
+  /item/list:
+    get:
+      tags:
+        - Item
+      summary: Item List
+      description: Get Item List
+      produces:
+        - application/json
+      parameters:
+        - name: type
+          description: type of category (1.category 2.subCategory)
+          in: query
+          example: 1
+          type: string
+        - name: categoryId
+          description: parent categoryId
+          in: query
+          example: 61d530dcb42c795cf4c63863
+          type: string
+        - name: userId
+          description: userId
+          in: query
+          required: true
+          example: 61d530dcb42c795cf4c63863
+          type: string
+        - name: enable
+          description: enable
+          in: query
+          example: true
+          type: boolean
+      responses:
+        200:
+          description: Item List
+        404:
+          description: No Item Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+
+  /item/{itemId}:
+    get:
+      tags:
+        - Item
+      summary: Item Details
+      description: Get Item Details
+      produces:
+        - application/json
+      parameters:
+        - name: itemId
+          description: itemId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      responses:
+        200:
+          description: Item Details
+        404:
+          description: No Item Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+    put:
+      tags:
+        - Item
+      summary: update Item
+      description: update Item
+      produces:
+        - application/json
+      parameters:
+        - name: itemId
+          description: itemId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      requestBody:
+        description: update Item
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                description: item Name
+                in: body
+                required: true
+                type: string
+                example: test item
+              description:
+                description: description
+                in: body
+                required: true
+                type: string
+                example: description
+              price:
+                description: categoryType
+                in: body
+                required: true
+                type: number
+                example: 100
+              foodType:
+                description: postId
+                in: body
+                required: true
+                type: number
+                example: 1
+              availableType:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: fhgfhfg6876876876876
+              categoryId:
+                description: categoryId
+                in: body
+                required: true
+                type: string
+                example: fhgfhfg6876876876876
+              subCategoryId:
+                description: categoryType
+                in: body
+                type: string
+                example: null
+              includeGst:
+                description: includeGst
+                in: body
+                required: true
+                type: boolean
+                example: true
+              enable:
+                description: enable
+                in: body
+                required: true
+                type: boolean
+                example: true
+              status:
+                description: status
+                in: body
+                required: true
+                type: number
+                example: 1
+              updatedBy:
+                in: body
+                required: true
+                type: string
+                example: 61c30ba30db86c001beaf395
+      responses:
+        200:
+          description: Item updated Successfully
+        404:
+          description: Invalid Item.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+    delete:
+      tags:
+        - Item
+      summary: delete Item
+      description: Delete a Item
+      produces:
+        - application/json
+      parameters:
+        - name: itemId
+          description: itemId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      requestBody:
+      responses:
+        200:
+          description: Item deleted successfully
+        400:
+          description: Something Went Wrong. Please Try again later.
+        404:
+          description: Invalid Item.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []

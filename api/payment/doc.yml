@@ -1,0 +1,139 @@
+tags:
+  name: Payment
+  description: Payment management
+
+components:
+   schemas:
+     Payment:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+           description: Id
+         paymentMethod:
+           type: string
+           description: paymentMethod
+         paymentGateway:
+           type: string
+           description: paymentGateway
+         amount:
+           type: Number
+           description: amount
+         paymentDate:
+           type: string
+           format: date-time
+           description: paymentDate
+         paymentGatewayId:
+           type: string
+           description: paymentGateway
+         orderId:
+           type: string
+           format: ObjectId
+           $ref: '#/components/schemas/Order'
+         userId:
+           type: string
+           format: ObjectId
+           $ref: '#/components/schemas/User'
+         userIp:
+           type: string
+           description: userIp
+         status:
+           type: number
+         paymentStatus:
+           type: number
+       example:
+          _id: 6204fefbe6cf07c50c28e061
+          orderId: 6204ddb79fd7f6a08c2b8fce
+          userId: 61b720e69d744b669826b583
+          paymentGateway: '1'
+          userIp: null
+          amount: 90
+          paymentStatus: 1
+          status: 1
+          createdAt: '2021-12-13T10:31:02.583+00:00'
+          updatedAt: '2021-12-13T10:31:02.583+00:00'
+
+paths:
+  /payment/success-payment:
+    post:
+      tags:
+        - Payment
+      summary: Payment
+      description: Success Payment
+      produces:
+        - application/json
+      requestBody:
+        description: Success Payment
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              orderId:
+                description: orderId
+                in: body
+                required: true
+                type: string
+              userId:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: 61b720e69d744b669826b583
+              paymentGateway:
+                description: paymentGateway
+                in: body
+                type: string
+                example: "1"
+      responses:
+        200:
+          description: Payment Received Successfully 
+        400:
+          description: Something went wrong. Please try again. | Payment already Processed | Invalid UserId to process payment
+        404:
+          description: Invalid PaymentId
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /payment/failure-payment:
+    post:
+      tags:
+        - Payment
+      summary: Payment
+      description: Failure Payment
+      produces:
+        - application/json
+      requestBody:
+        description: Failure Payment
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              orderId:
+                description: orderId
+                in: body
+                required: true
+                type: string
+              userId:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: 61b720e69d744b669826b583
+      responses:
+        200:
+          description: Payment Failed 
+        400:
+          description: Something went wrong. Please try again. | Payment already Processed | Invalid UserId to process payment
+        404:
+          description: Invalid PaymentId
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+

@@ -1,0 +1,282 @@
+tags:
+  name: Categories
+  description: Categories management
+
+components:
+   schemas:
+     Category:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+           description: categoryId
+         name:
+           type: string
+           format: string
+           description: name of the category
+         value:
+           type: string
+           format: string
+           description: value of the category
+         categoryType:
+           type: number
+           format: number
+           description: categoryType of category
+         parentCategoryId:
+           type: string
+           format: ObjectId
+           description: parentCategoryId of the category
+         status:
+           type: number
+           format: number
+           description: status of category
+         enable:
+           type: boolean
+           description: enable category
+         image:
+           type: Array
+           format: Array
+         createdBy:
+           type: string
+           format: string
+           description: created userId
+           $ref: '#/components/schemas/User'
+         updatedBy:
+           type: string
+           format: string
+           description: updated userId
+           $ref: '#/components/schemas/User'
+         createdAt:
+           type: string
+           format: date-time
+           description: Record created date time
+         updatedAt:
+           type: string
+           format: date-time
+           description: Record last updated date time
+       example:
+          _id: 5f8e8aec08f60970124cc24f
+          name: test Category
+          value: test_category
+          categoryType: 1
+          status: 1
+          enable: true
+          createdBy: 5f8e8aec08f60970124cc24f
+          updatedBy: 5f8e8aec08f60970124cc24f
+          createdAt: '2021-12-13T10:31:02.583+00:00'
+          updatedAt: '2021-12-13T10:31:02.583+00:00'
+
+paths:
+  /category:
+    post:
+      tags:
+        - Categories
+      summary: create Category
+      description: Add a Category
+      produces:
+        - application/json
+      requestBody:
+        description: Add Category
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                description: name
+                in: body
+                required: true
+                type: string
+                example: name
+              value:
+                description: value
+                in: body
+                required: true
+                type: string
+                example: value
+              enable:
+                description: value
+                in: body
+                required: true
+                type: boolean
+                example: true
+              parentCategoryId:
+                description: value
+                in: body
+                type: string
+              categoryType:
+                description: categoryType
+                in: body
+                required: true
+                type: number
+                example: 1
+              status:
+                description: status
+                in: body
+                required: true
+                type: number
+                example: 1
+              createdBy:
+                in: body
+                required: true
+                type: string
+                example: 61c30ba30db86c001beaf395
+      responses:
+        200:
+          description: Category added Successfully 
+        400:
+          description: Something went Wrong. Please Try again later.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+
+  /category/list:
+    get:
+      tags:
+        - Categories
+      summary: Category List
+      description: Get Category List
+      parameters:
+        - name: type
+          description: type of category (1.category 2.subCategory)
+          in: query
+          example: 1
+          type: string
+        - name: categoryId
+          description: parent categoryId
+          in: query
+          example: 61d530dcb42c795cf4c63863
+          type: string
+      responses:
+        200:
+          description: Category List
+        404:
+          description: No Category Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+
+  /category/{categoryId}:
+    get:
+      tags:
+        - Categories
+      summary: Category Details
+      description: Get Category Details
+      produces:
+        - application/json
+      parameters:
+        - name: categoryId
+          description: categoryId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      responses:
+        200:
+          description: Category Details
+        404:
+          description: No Category Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+    put:
+      tags:
+        - Categories
+      summary: update Category
+      description: Update Category
+      produces:
+        - application/json
+      parameters:
+        - name: categoryId
+          description: categoryId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      requestBody:
+        description: Update Category
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                description: name
+                in: body
+                required: true
+                type: string
+                example: name
+              value:
+                description: value
+                in: body
+                required: true
+                type: string
+                example: value
+              enable:
+                description: value
+                in: body
+                required: true
+                type: boolean
+                example: true
+              parentCategoryId:
+                description: value
+                in: body
+                type: string
+              categoryType:
+                description: categoryType
+                in: body
+                required: true
+                type: number
+                example: 1
+              status:
+                description: status
+                in: body
+                required: true
+                type: number
+                example: 1
+              createdBy:
+                in: body
+                required: true
+                type: string
+                example: 61c30ba30db86c001beaf395
+      responses:
+        200:
+          description: Category updated Successfully
+        404:
+          description: Invalid CategoryId.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+    delete:
+      tags:
+        - Categories
+      summary: delete category
+      description: Delete a Category
+      produces:
+        - application/json
+      parameters:
+        - name: categoryId
+          description: categoryId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      requestBody:
+      responses:
+        200:
+          description: Category deleted successfully
+        400:
+          description: Something Went Wrong. Please Try again later.
+        404:
+          description: Invalid CategoryId.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []

@@ -1,0 +1,222 @@
+tags:
+  name: config
+  description: config Management
+
+components:
+   schemas:
+     config:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+           description: Id of config
+         key:
+           type: String
+           description: key value
+         value:
+           type: Object
+           format: Object
+           description: value of config
+         external:
+           type: Boolean
+           description: external value of config
+         status:
+           type: Number
+           description: external value of config
+         createdAt:
+           type: string
+           format: date-time
+           description: Record created date time
+         updatedAt:
+           type: string
+           format: date-time
+           description: Record last updated date time
+       example:
+          _id: 5f8e8aec08f60970124cc24f
+          key: VIDEO_UPLOAD_CONFIG
+          value: {}
+          status: 1
+          createdBy: '2021-12-13T10:31:02.583+00:00'
+          updatedBy: '2021-12-13T10:31:02.583+00:00'
+
+paths:
+  /config:
+    post:
+      tags:
+        - config
+      summary: config
+      description: Add a config
+      produces:
+        - application/json
+      parameters:
+      requestBody:
+        description: Add Config
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              key:
+                description: key
+                in: body
+                required: true
+                type: string
+                example: utyutyuytuytuytuytty
+              value:
+                description: value
+                in: body
+                required: true
+                type: string
+                example: fhgfhfg6876876876876
+              external:
+                description: external
+                in: body
+                required: true
+                type: boolean
+                example: true | false
+              status:
+                description: status
+                in: body
+                required: true
+                type: string
+                example: fhgfhfg6876876876876
+      responses:
+        200:
+          description: Config added Successfully
+        400:
+          description: Something went Wrong. Please Try again later.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /config/list:
+    get:
+      tags:
+        - config
+      summary: config
+      description: Get config list
+      produces:
+        - application/json
+      parameters:
+      responses:
+        200:
+          description: Config List
+        400:
+          description: Something went Wrong. Please Try again later.
+        404:
+          description: No Config Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+
+  /config/{config_id}:
+    get:
+      tags:
+        - config
+      summary: config
+      description: Get a config
+      produces:
+        - application/json
+      parameters:
+        - name: config_id
+          description: config_id
+          in: path
+          required: true
+          example: 61b1b314a141614338ce29f2
+          type: string
+      responses:
+        200:
+          description: Config Details
+        400:
+          description: Something went Wrong. Please Try again later.
+        404:
+          description: No Config Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+    put:
+      tags:
+        - config
+      summary: config
+      description: Update a config
+      produces:
+        - application/json
+      parameters:
+        - name: config_id
+          description: config_id
+          in: path
+          required: true
+          example: 61b1b314a141614338ce29f2
+          type: string
+      requestBody:
+        description: update config
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              key:
+                description: key
+                in: body
+                type: string
+                example: hi
+              value:
+                description: value
+                in: body
+                type: string
+                example: hdi
+              external:
+                description: external
+                in: body
+                type: boolean
+                example: true | false
+              status:
+                description: external
+                in: body
+                type: string
+                example: df
+      responses:
+        200:
+          description: Config updated Successfully
+        400:
+          description: Something went Wrong. Please Try again later.
+        404:
+          description: Invalid ConfigId.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+    delete:
+      tags:
+        - config
+      summary: config
+      description: Delete a config
+      produces:
+        - application/json
+      parameters:
+        - name: config_id
+          description: config_id
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      requestBody:
+      responses:
+        200:
+          description: Config deleted successfully
+        400:
+          description: Something went Wrong. Please Try again later.
+        404:
+          description: Invalid ConfigId.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+ 

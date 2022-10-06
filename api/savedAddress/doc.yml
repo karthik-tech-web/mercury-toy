@@ -1,0 +1,296 @@
+tags:
+  name: Saved Address
+  description: saved Address Management
+
+components:
+   schemas:
+     SavedAddress:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+         geoLocation:
+           type: string
+           description: geoLocation
+         address1:
+           type: string
+           description: address1
+         address2:
+           type: string
+           description: address2
+         landMark:
+           type: string
+           description: landMark
+         addressType:
+           type: number
+           description: addressType // 1.Home 2.Work 3.Friends or Family 4.others
+         otherUserName:
+           type: string
+           description: otherUserName // if address choosed for others
+         receiverName:
+           type: string
+           description: receiverName // if address choosed for friends or family
+         receiverPhoneNo:
+           type: string
+           description: receiverPhoneNo // if address choosed for friends or family
+         defaultAddress:
+           type: boolean
+           description: defaultAddress
+         userId:
+           type: string
+           description: userId
+         createdAt:
+           type: string
+           format: date-time
+           description: Record created date time
+         updatedAt:
+           type: string
+           format: date-time
+           description: Record last updated date time
+
+paths:
+  /saved-address:
+    post:
+      tags:
+        - Saved Address
+      summary: add Billing Address
+      description: add Billing Address
+      produces:
+        - application/json
+      requestBody:
+        description: Add a Billing Address
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              geoLocation:
+                description: geoLocation
+                in: body
+                required: true
+                type: string
+              address1:
+                description: address1
+                in: body
+                required: true
+                type: string
+                example: address1
+              address2:
+                description: address2
+                in: body
+                type: string
+                example: address2
+              landMark:
+                description: landMark
+                in: body
+                required: true
+                type: string
+                example: "landMark"
+              addressType:
+                description: addressType
+                in: body
+                required: true
+                type: string
+                example: addressType
+              defaultAddress:
+                description: defaultAddress
+                in: body
+                required: true
+                type: string
+                example: true
+              otherUserName:
+                description: otherUserName
+                in: body
+                type: string
+                example: otherUserName
+              receiverName:
+                description: receiverName
+                in: body
+                type: string
+                example: receiverName
+              receiverPhoneNo:
+                description: receiverPhoneNo
+                in: body
+                required: true
+                type: string
+                example: 123456
+              userId:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: 61c30ba30db86c001beaf395
+      responses:
+        200:
+          description: Address saved Successfully  
+        400:
+          description: Something went wrong. Please try again. | Address Already Exist.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /saved-address/{userId}/list:
+    get:
+      tags:
+        - Saved Address
+      summary: saved Address List
+      description: saved Address List
+      parameters:
+        - name: userId
+          description: userId
+          in: path
+          required: true
+          example: 61c30ba30db86c001beaf395
+        - name: limit
+          description: limit
+          in: query
+          required: true
+          example: 10
+          type: number
+        - name: offset
+          description: offset
+          in: query
+          required: true
+          example: 0
+          type: number
+      responses:
+        200:
+          description: Billing Address List  
+        400:
+          description: Something went wrong. Please try again.  
+        404:
+          description: No Billing Address Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /saved-address/{addressId}:
+    get:
+      tags:
+        - Saved Address
+      summary: Address Details
+      description: Address Details
+      produces:
+        - application/json
+      parameters:
+        - name: addressId
+          description: addressId
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Billing Address Details
+        404:
+          description: No Billing Address Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+    put:
+      tags:
+        - Saved Address
+      summary: Update Address
+      description: Update a Address
+      produces:
+        - application/json
+      parameters:
+        - name: addressId
+          description: addressId
+          in: path
+          required: true
+          type: string
+      requestBody:
+        description: update addressId
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              geoLocation:
+                description: geoLocation
+                in: body
+                required: true
+                type: string
+              address1:
+                description: address1
+                in: body
+                required: true
+                type: string
+                example: address1
+              address2:
+                description: address2
+                in: body
+                type: string
+                example: address2
+              landMark:
+                description: landMark
+                in: body
+                required: true
+                type: string
+                example: "landMark"
+              addressType:
+                description: addressType
+                in: body
+                required: true
+                type: string
+                example: addressType
+              defaultAddress:
+                description: defaultAddress
+                in: body
+                required: true
+                type: string
+                example: true
+              otherUserName:
+                description: otherUserName
+                in: body
+                type: string
+                example: otherUserName
+              receiverName:
+                description: receiverName
+                in: body
+                type: string
+                example: receiverName
+              receiverPhoneNo:
+                description: receiverPhoneNo
+                in: body
+                required: true
+                type: string
+                example: 123456
+      responses:
+        200:
+          description: Address updated Successfully
+        404:
+          description: Invalid addressId.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+    delete:
+      tags:
+        - Saved Address
+      summary: delete Address
+      description: Delete a Address
+      produces:
+        - application/json
+      parameters:
+        - name: addressId
+          description: addressId
+          in: path
+          required: true
+          type: string
+      requestBody:
+      responses:
+        200:
+          description: Address Deleted Successfully
+        400:
+          description: Something Went Wrong. Please Try again later.
+        404:
+          description: Invalid addressId.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []

@@ -1,0 +1,183 @@
+tags:
+  name: Cart
+  description: Cart management
+
+components:
+   schemas:
+     Cart:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+         userId:
+           type: string
+           format: ObjectId
+           description: userId
+         productId:
+           type: string
+           format: ObjectId
+           description: productId
+         itemCount:
+           type: number
+           format: number
+           description: itemCount of cart
+       example:
+          _id: 5f8e8aec08f60970124cc24f
+          userId: 5f8e8aec08f60970124cc24f
+          productId: 5f8e8aec08f60970124cc24f
+          itemCount: 1
+
+paths:
+  /cart:
+    post:
+      tags:
+        - Cart
+      summary: Cart
+      description: Add a Cart
+      produces:
+        - application/json
+      # parameters:
+      requestBody:
+        description: Add a Cart
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              products:
+                description: products
+                in: body
+                required: true
+                type: string
+                example: 61dd3c3a1626be001b85ed4e~1|61dd3c3a1626be001b85ed4e~2
+              userId:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: 61c30ba30db86c001beaf395
+      responses:
+        200:
+          description: Cart added Successfully 
+        400:
+          description: Something went wrong. Please try again.
+        409:
+          description: Something went wrong. Please try again.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+  
+  /cart/{cartId}:
+    get:
+      tags:
+        - Cart
+      summary: Cart Details
+      description: Get Cart Details
+      produces:
+        - application/json
+      parameters:
+        - name: cartId
+          description: cartId
+          in: path
+          required: true
+          example: 61dd3ff17297e540c0318fe2
+          type: string
+      responses:
+        200:
+          description: Cart Details
+        404:
+          description: No Cart Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+    put:
+      tags:
+        - Cart
+      summary: Cart
+      description: Update a Cart
+      produces:
+        - application/json
+      parameters:
+        - name: cartId
+          description: cartId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      requestBody:
+        description: update Cart
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              itemCount:
+                description: itemCount
+                in: body
+                required: true
+                type: number
+                example: 1
+      responses:
+        200:
+          description: Cart updated Successfully
+        404:
+          description: Invalid cart id.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+    delete:
+      tags:
+        - Cart
+      summary: delete Cart
+      description: Delete a Cart
+      produces:
+        - application/json
+      parameters:
+        - name: cartId
+          description: cartId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      requestBody:
+      responses:
+        200:
+          description: Cart deleted successfully
+        400:
+          description: Something Went Wrong. Please Try again later.
+        404:
+          description: Invalid CategoryId.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /cart/list/{userId}:
+    get:
+      tags:
+        - Cart
+      summary: Cart Details
+      description: Get Cart Details By user id
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          description: userId
+          in: path
+          required: true
+          example: 61dd3ff17297e540c0318fe2
+          type: string
+      responses:
+        200:
+          description: Cart Details
+        404:
+          description: No Cart Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []

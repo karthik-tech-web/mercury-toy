@@ -1,0 +1,75 @@
+tags:
+  name: Auth
+  description: Authentication Management
+
+paths:
+  /auth/signUp:
+    post:
+      tags:
+        - Auth
+      summary: User SignUp
+      description: A new user signup
+      produces:
+        - application/json
+      responses:
+        200:
+          description: User Account Linked Successfully | User Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          description: Something went wrong. Please try again
+        404:
+          description: User not Found
+        409:
+          description: User already exists
+        500:
+          description: Internal Server Error
+      security:
+        - BearerAuth: []
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: User login.
+      description: User login
+      responses:
+        200:
+          description: User Login successfully
+        400:
+          description: Something went wrong. Please try again
+        404:
+          description: User not Found
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /auth/logout/{firebaseId}:
+    post:
+      tags:
+        - Auth
+      summary: User logout.
+      description: User logout
+      produces:
+        - application/json
+      parameters:
+        - name: firebaseId
+          description: firebase Id of the user
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      responses:
+        200:
+          description: Logout Successfully
+        400:
+          description: User is not Logged In
+        404:
+          description: User not Found
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []

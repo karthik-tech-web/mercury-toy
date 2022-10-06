@@ -1,0 +1,205 @@
+tags:
+  name: Order
+  description: Order management
+
+components:
+   schemas:
+     Order:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+           description: Id
+         products:
+           type: string
+           format: ObjectId
+           description: Id of Item
+           $ref: '#/components/schemas/Item'
+         discountCode:
+           type: string
+           description: discountCode
+         actualAmount:
+           type: Number
+           description: product actual amount
+         orderAmount:
+           type: number
+           description: offer Amount
+         userId:
+           type: string
+           format: ObjectId
+           $ref: '#/components/schemas/User'
+         orderProcessed:
+           type: number
+           description: order status // 0.pending 1.Success 2.Failure 3.Cancel 4.Refund
+         foodStatus:
+           type: number
+           description: food status // 0.pending 1.New 2.Accepted 3.outOfDelivery 4.Delivered
+         status:
+           type: number
+       example:
+          _id: 6204ddb79fd7f6a08c2b8fce
+          productId: 62038c3d403cc0001475b471
+          userId: 61b720e69d744b669826b583
+          discountCode: null
+          actualAmount: 100
+          orderAmount: 100
+          orderProcessed: 1
+          foodStatus: 2
+          status: 1
+          createdAt: '2021-12-13T10:31:02.583+00:00'
+          updatedAt: '2021-12-13T10:31:02.583+00:00'
+
+paths:
+  /order:
+    post:
+      tags:
+        - Order
+      summary: Order
+      description: Create Order
+      produces:
+        - application/json
+      requestBody:
+        description: Create Order
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              products:
+                description: products
+                in: body
+                required: true
+                type: string
+              productsName:
+                description: products
+                in: body
+                required: true
+                type: string
+              userId:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: 61b720e69d744b669826b583
+              actualAmount:
+                description: totalActualAmount
+                in: body
+                required: true
+                type: number
+              orderAmount:
+                description: totalOfferAmount
+                in: body
+                required: true
+                type: number
+              orderDate:
+                description: orderDate
+                in: body
+                required: true
+                type: string
+              orderProcessed:
+                description: orderProcessed
+                in: body
+                required: true
+                type: number
+              userIp:
+                description: userIp
+                in: body
+                required: true
+                type: string
+              status:
+                description: status
+                in: body
+                required: true
+                type: number
+      responses:
+        200:
+          description: Order Created Successfully 
+        400:
+          description: Something went wrong. Please try again.
+        404:
+          description: Invalid Product Id. | Invalid User Id
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+#   /order/list/{userId}:
+#     get:
+#       tags:
+#         - Order
+#       summary: Order List
+#       description: Get Order List By user id
+#       produces:
+#         - application/json
+#       parameters:
+#         - name: userId
+#           description: userId
+#           in: path
+#           required: true
+#           example: 61dd3ff17297e540c0318fe2
+#           type: string
+#         - name: status
+#           description: status
+#           in: query
+#           type: number
+#       responses:
+#         200:
+#           description: Order List
+#         404:
+#           description: No Order Found.
+#         500:
+#           description: Internal Server Error
+#       security :
+#         - BearerAuth: []
+
+#   /order/{orderId}:
+#     get:
+#       tags:
+#         - Order
+#       summary: Order Details
+#       description: Get Order Details
+#       produces:
+#         - application/json
+#       parameters:
+#         - name: orderId
+#           description: orderId
+#           in: path
+#           required: true
+#           example: 61dd3ff17297e540c0318fe2
+#           type: string
+#       responses:
+#         200:
+#           description: Order Details
+#         404:
+#           description: No Order Found.
+#         500:
+#           description: Internal Server Error
+#       security :
+#         - BearerAuth: []
+
+
+#   /order/product-exist:
+#     get:
+#       tags:
+#         - Order
+#       summary: check product Exists
+#       description: check product Exists
+#       produces:
+#         - application/json
+#       parameters:
+#         - name: productId
+#           description: productId
+#           in: query
+#           required: true
+#           example: 620cea80c937b40019c28cd4
+#           type: string
+#       responses:
+#         200:
+#           description: result
+#         404:
+#           description: Invalid Product Id.
+#         500:
+#           description: Internal Server Error
+#       security :
+#         - BearerAuth: []

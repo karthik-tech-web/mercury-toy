@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mercurytoysuser",
+  "private_key_id": "2f6e4ff6bbf4fb87bcc980f342790ba902749f51",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC998Biu2qpScvi\nt3SenAhxLyFaEjAiSIwuagW6VlZNjJyU0dIrRq0pcKcBa51uqoMWL0rmugE/dGKe\n1rg8EODYhGRckegx+eP+0xESF/UudBAQKnGatHWguZ1h6blT5nM/Xj7NpTAdblWp\n3cbgDxt6+ScJPrzsnq9nJ+odkufcAyaK/R/4HwghhtPO1iQfcZTd202gY2A144O8\nRFPNW0P+9Az/B1e6hl9ZDKhXOmxS009dZtO4JXiqduMY3zBXUQpCxMzQHGC2ABEW\n4243WqLCvBBlhibRe8jzmInI4G8A8Qyu6nCWTrBii07mxaoh0dcJyS/ZeFdTd0eU\nnaF85tiZAgMBAAECggEACwcJpJmZUZoycxbf9tCbN1nLa3d8kpLoS031hul54U7R\nLJzpAMDdrrcGxND2zryodyZX6GCiD6lNi8euYnM+4CbATjTcmCEX1HwzZJveLFwJ\nriyOk3LYFLRNr+hBzT5mkIZDqkulaUH1SFLy12EdIOR7eQCKtkgoaboyD5UubzGo\nWaUOM04HMu4fvkgDRr9Xz4zud4vxmk8Xah8j/UJNGrc0cUFxYWjBQWmEmle8tGgG\ng83YSavkzufJywMHzL/b8LkP0TtlN3sWO+EBzxmPC+MjqoexIP5Zekc0lHdJnsrt\nED07fBC45A9HkiJphGTn7a+8PsEI+TGCzfEn7gt5gQKBgQD3qoRO8WkLwcE/6Aq4\niVODBzcRssGin6c2GwYWFNQgZh01oZH58Yf8PsIOQI4GzQ9Fwm1R7fBFktabyh8d\nkLgh92aZRGMTzhOT+ODNTv3ogSOvOHCGBbHdBHUuP8rohweraKhZ5u5uUDG+k896\n/1So7O6Z4do2dUUHTxe1ldbnGQKBgQDEXDN7zZ/WpL13Ro7A60ZH0B1mD/B6TdwH\nS+XODujwVkatNb9pLx+zrkeKBhjTB2ULecr18P0joP57Hkdu7+c6ze3ZFkUeHQm4\neoK85LzGilue5U+5IEYkhGkn/vP95TqrMNtHOU777VhedXdbEEIgn4FJcyL4fIZH\n4O0C7YUtgQKBgFcNvMvy1zWmuUK5UWtj+dLIqnayGpYLAD9oaE9Cqv1oZ0P+sszk\nNSRY+uT/k+yYD5I5sStnM1mBL6Y6+Yzu3Yoy6AFfpGPFv+P3Sy1fYqhjHCPu9r5l\nKgvCEV5cVfo93FhHxUU0gwKLdbDDS96z+RIXlhbI6GbT+ZuEFZViQdOhAoGAOOjH\n+w+jTaA9UT5fzUXi/pkwjA3+klPSe0Lh/ZCQrmcy4Kx9J00DER5nmXce5rpz7JmF\n2zXXB+Z3GtOxvFNHXuGkF5C+w3WDBbZsAbcBh0E+QJURQAQ8kATYPUFFEcbH9Cma\nw8+2NomZXPcKepgBslbIL7Nw5Teh618jEgAo4wECgYEAmVLpNlHI9n8qG2rOONRt\n+lnZOFipAE4zHWzomWMbdGGzUv9Lv79UVhmp4l1u8zd7SrEORU1l1qbavvpTo4XJ\niE7GKA8iLoTmMwh883xwh/u72ZQmpuxbfjoWXMB2e0bQXS+7ExyikKAWIFuWuI4G\n6v5jhenXI3Fl5kRZvhSJlcY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-xf731@mercurytoysuser.iam.gserviceaccount.com",
+  "client_id": "100998645928944483305",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-xf731%40mercurytoysuser.iam.gserviceaccount.com"
+}

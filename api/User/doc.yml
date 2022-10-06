@@ -1,0 +1,152 @@
+tags:
+  name: User
+  description: User Management
+
+components:
+   schemas:
+     User:
+       type: object
+       required:
+         - _id
+         - firebaseUid
+         - phoneNumber
+         - status
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+           description: User Id
+         firebaseUid:
+           type: string
+           format: string
+           description: Firebase User Id of the User.
+         email:
+           type: string
+           format: email
+           description: Email for the user, needs to be unique.
+         displayName:
+           type: string
+           format: string
+           description: user displayName
+         emailVerified:
+           type: boolean
+         phoneNumber:
+           type: String
+           format: String
+         invitationCode:
+           type: string
+           format: string
+           description: Firebase User Id of the User.
+         inviteCode:
+           type: string
+           description: invite Code.
+         online:
+           type: boolean
+         loginCount:
+           type: Number
+         lastLogin:
+           type: String
+         status:
+           type: Number
+           format: Number
+           description: inactive (0), active (1)
+         createdBy:
+           type: String
+           format: ObjectId
+           description: Id of the user who creates the record
+           $ref: '#/components/schemas/User'
+         updatedBy:
+           type: string
+           format: ObjectId
+           description: Id of the user who updates the record last
+           $ref: '#/components/schemas/User'
+         createdAt:
+           type: string
+           format: date-time
+           description: Record created date time
+         updatedAt:
+           type: string
+           format: date-time
+           description: Record last updated date time
+
+paths:
+  /user/{data}/{type}:
+    get:
+      tags:
+        - User
+      summary: User Details
+      description: Get User Details
+      produces:
+        - application/json
+      parameters:
+        - name: data
+          description: unique id or firebase id
+          in: path
+          required: true
+          type: string
+          example: UK6apSwR9lMZ3IGIu8mtQtzBtXT2
+        - name: type
+          description: type to identify Id
+          in: path
+          required: true
+          type: number
+          example: 2
+      responses:
+        200:
+          description: User Detail
+        404:
+          description: No User Found
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /user/{userId}:
+    put:
+      tags:
+        - User
+      summary: update User details
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          description: userId of user
+          in: path
+          required: true
+          type: string
+          example: 61c30ba30db86c001beaf395
+      requestBody:
+        description: Add Category
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              displayName:
+                description: displayName of user
+                in: body
+                required: true
+                type: string
+              phoneNumber:
+                description: phoneNumber of user
+                in: body
+                required: true
+                type: string
+              email:
+                description: email of user
+                in: body
+                required: true
+                type: string
+              inviteCode:
+                description: inviteCode of user
+                in: body
+                type: string
+      responses:
+        200:
+          description: User updated Successfully
+        404:
+          description: User does not exist
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
