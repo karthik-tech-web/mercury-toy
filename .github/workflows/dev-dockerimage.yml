@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+
+  build:
+
+    runs-on: mercury-toy-api-dev
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Dev Docker image
+      run: | 
+            ls
+            docker build . --file Dockerfile --tag mercury-toy-api-dev:1
+            docker ps -q --filter "name=mercury-toy-api-dev-container" | grep -q . && docker stop mercury-toy-api-dev-container && docker rm -fv mercury-toy-api-dev-container
+            docker run --name mercury-toy-api-dev-container -e NODE_ENV=local --env-file $HOME/actions-runner/_work/mercury-toy-api/mercury-toy-api/env.list -d -p 8083:8083 --restart=always mercury-toy-api-dev:1

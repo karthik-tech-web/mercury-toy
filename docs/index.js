@@ -37,15 +37,15 @@ const swaggerDefinition = {
         },
     },
     info: {
-        title: 'Akshatharaa API',
+        title: 'Mercury Toy API',
         version: '1.0.0',
         // eslint-disable-next-line no-useless-escape
-        description: 'Akshatharaa API Documentation. Header for all the APIs: Authorization: Bearer \"Firebase user ID token\"',
+        description: 'MercuryToy API Documentation. Header for all the APIs: Authorization: Bearer \"Firebase user ID token\"',
     },
     host: `${process.env.SERVER_DOMAIN}api`,
     servers: [
-        { url: 'http://localhost:8083/api'},
-        { url: 'https://akshatra-api.herokuapp.com/api'},
+        { url: 'http://localhost:8083/api' },
+        { url: 'https://mercury-toy.herokuapp.com//api' },
     ],
     basePath: '/',
 };
