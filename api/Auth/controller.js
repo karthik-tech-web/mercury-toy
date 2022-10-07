@@ -7,10 +7,10 @@ const moment = require('moment');
 const firebaseApi = require('../../system/lib/firebase/index');
 // const userService = require('../User/service');
 const dbService = require('../../system/db/dbService');
-const stringConfig = require('../../system/utils/config');
-const jwtAuth = require('../../system/utils/jwt-auth');
+// const stringConfig = require('../../system/utils/config');
+// const jwtAuth = require('../../system/utils/jwt-auth');
 
-const signIn = async(userMeta) => {
+const signIn = async (userMeta) => {
     const firebaseUser = await firebaseApi.getUser(userMeta.user_id);
     if (firebaseUser.uid === undefined) {
         throw boom.notFound('User not Found');
@@ -18,7 +18,7 @@ const signIn = async(userMeta) => {
     let createUser = null;
     const result = {
         status: 200,
-        message: 'User LoggedIn Successfully', 
+        message: 'User LoggedIn Successfully',
     };
     const addUser = {
         firebaseUid: firebaseUser.uid,
@@ -45,7 +45,7 @@ const signIn = async(userMeta) => {
     return result;
 };
 
-const logout = async(params) => {
+const logout = async (params) => {
     const updateParams = {
         online: false,
     };

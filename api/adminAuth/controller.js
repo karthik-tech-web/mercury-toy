@@ -68,7 +68,6 @@ const logout = async (params) => {
     return result;
 };
 
-
 module.exports = {
     signIn,
     logout,
