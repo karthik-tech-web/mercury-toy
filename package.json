@@ -2,11 +2,12 @@
   "name": "mercury-toy",
   "version": "1.0.0",
   "description": "",
-  "main": ".eslintrc.js",
+  "main": "bin/www",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
+    "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
