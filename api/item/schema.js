@@ -30,7 +30,7 @@ module.exports.getItemList = {
     query: joi.object().keys({
         category: joi.string().allow('', null).optional(),
         userId: joi.string().required(),
-        enable: joi.boolean().allow('', null).optional(),
+        available: joi.boolean().allow('', null).optional(),
         tenantId: joi.string().required(),
     }),
 };
