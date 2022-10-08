@@ -8,15 +8,17 @@ module.exports.options = {
 
 module.exports.add = {
     body: joi.object().keys({
-        geoLocation: joi.string().required(),
+        fullName: joi.string().required(),
         address1: joi.string().required(),
         address2: joi.string().allow('', null).optional(),
-        landMark: joi.string().allow('', null).optional(),
+        city: joi.string().required(),
+        state: joi.string().required(),
+        pincode: joi.string().required(),
+        phoneNo: joi.string().required(),
+        alternatePhn: joi.string().required(),
         addressType: joi.number().required(),
+        landMark: joi.string().allow('', null).optional(),
         defaultAddress: joi.boolean().required(),
-        otherUserName: joi.when('addressType', { is: 4, then: joi.string().required(), otherwise: joi.optional() }),
-        receiverName: joi.when('addressType', { is: 3, then: joi.string().required(), otherwise: joi.optional() }),
-        receiverPhoneNo: joi.when('addressType', { is: 3, then: joi.string().required(), otherwise: joi.optional() }),
         userId: joi.string().required(),
     }),
     query: {
@@ -47,15 +49,18 @@ module.exports.getAddress = {
 
 module.exports.update = {
     body: joi.object().keys({
-        geoLocation: joi.string().required(),
+        fullName: joi.string().required(),
         address1: joi.string().required(),
         address2: joi.string().allow('', null).optional(),
-        landMark: joi.string().allow('', null).optional(),
+        city: joi.string().required(),
+        state: joi.string().required(),
+        pincode: joi.string().required(),
+        phoneNo: joi.string().required(),
+        alternatePhn: joi.string().required(),
         addressType: joi.number().required(),
+        landMark: joi.string().allow('', null).optional(),
         defaultAddress: joi.boolean().required(),
-        otherUserName: joi.when('addressType', { is: 4, then: joi.string().required(), otherwise: joi.optional() }),
-        receiverName: joi.when('addressType', { is: 3, then: joi.string().required(), otherwise: joi.optional() }),
-        receiverPhoneNo: joi.when('addressType', { is: 3, then: joi.string().required(), otherwise: joi.optional() }),
+        userId: joi.string().required(),
     }),
     params: {
         addressId: joi.string().required(),

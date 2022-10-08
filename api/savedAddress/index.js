@@ -6,14 +6,16 @@ const collecionSchema = new Schema({
         type: Schema.ObjectId,
         auto: true,
     },
-    geoLocation: String,
+    fullName: String,
     address1: String,
     address2: String,
+    city: String,
+    state: String,
+    pincode: String,
+    phoneNo: String,
+    alternatePhn: String,
+    addressType: Number, // 1.Home 2.Work
     landMark: String,
-    addressType: Number, // 1.Home 2.Work 3.Friends or Family 4.others
-    receiverName: String,
-    receiverPhoneNo: String,
-    otherUserName: String,
     defaultAddress: {
         type: Boolean,
         default: false,
@@ -26,7 +28,7 @@ const collecionSchema = new Schema({
     timestamps: true,
 });
 
-const getModel = async() => dbConn.models.savedAddress || dbConn.model('savedAddress', collecionSchema);
+const getModel = async () => dbConn.models.savedAddress || dbConn.model('savedAddress', collecionSchema);
 
 module.exports = {
     getModel,

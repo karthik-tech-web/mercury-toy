@@ -8,7 +8,7 @@ const schema = require('./schema');
 const controller = require('./controller');
 const fileUpload = require('../../system/middleware/process-upload');
 
-const uploadFields = [{ name: 'image', maxCount: 2 }];
+const uploadFields = [{ name: 'image', maxCount: 10 }];
 
 router.post('/', fileUpload('IMAGE', uploadFields), celebrate(schema.addItem, schema.options), c(controller.addItem, (req, res, next) => [req.files, req.body]));
 

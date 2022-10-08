@@ -1,0 +1,166 @@
+tags:
+  name: WishList
+  description: wishList Management
+
+components:
+   schemas:
+     WishList:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+           description: wishListId
+         itemId:
+           type: string
+           format: ObjectId
+           description: ID of product
+           $ref: '#/components/schemas/item'
+         userId:
+           type: string
+           format: ObjectId
+           description:  User Id
+           $ref: '#/components/schemas/User'
+         createdAt:
+           type: string
+           format: date-time
+           description: Record created date time
+         updatedAt:
+           type: string
+           format: date-time
+           description: Record last updated date time
+       example:
+          _id: 5f8e8aec08f60970124cc24f
+          itemId: N7vQTJyIdbNoHEKUDP5LYbhy95f2
+          userId: 5f8e8aec08f60970124cc24f
+          createdAt: '2021-12-13T10:31:02.583+00:00'
+          updatedAt: '2021-12-13T10:31:02.583+00:00'
+
+paths:
+  /wish-list:
+    post:
+      tags:
+        - WishList
+      summary: WishList
+      description: Add a WishList to user
+      produces:
+        - application/json
+      parameters:
+      requestBody:
+        description: Add a WishList to user
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              itemId:
+                description: itemId
+                in: body
+                required: true
+                type: string
+              userId:
+                description: userId
+                in: body
+                required: true
+                type: string
+      responses:
+        200:
+          description: WishList Added Successfully 
+        400:
+          description: Something went wrong. Please try again.
+        409:
+          description: WishList Already Added.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /wish-list/remove:
+    put:
+      tags:
+        - WishList
+      summary: WishList
+      description: Remove a WishList
+      produces:
+        - application/json
+      parameters:
+      requestBody:
+        description: Remove a bookmark
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              postId:
+                description: postId
+                in: body
+                required: true
+                type: string
+                example: utyutyuytuytuytuytty
+              userId:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: fhgfhfg6876876876876
+      responses:
+        200:
+          description: Item removed Successfully 
+        400:
+          description: Something went wrong. Please try again.
+        404:
+          description: Item is not added to wishList.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /wish-list/list/{userId}:
+    get:
+      tags:
+        - WishList
+      summary: WishList
+      description: get a WishList
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          description: userId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+        - name: sortBy
+          description: sortBy
+          in: query
+          example: des
+          type: string
+        - name: sortDir
+          description: sortDir
+          in: query
+          required: false
+          type: string
+        - name: limit
+          description: limit
+          in: query
+          required: true
+          example: 10
+          type: number
+        - name: offset
+          description: offset
+          in: query
+          required: true
+          example: 0
+          type: number
+      requestBody:
+      responses:
+        200:
+          description: WishList 
+        400:
+          description: Something went wrong. Please try again.
+        404:
+          description: No WishList found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []

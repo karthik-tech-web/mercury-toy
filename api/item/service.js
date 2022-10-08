@@ -17,13 +17,13 @@ const listService = async (params) => {
                 $lookup: {
                     from: 'categories',
                     let: {
-                        categoryId: '$categoryId',
+                        categoryId: '$category',
                     },
                     pipeline: [
                         {
                             $match: {
                                 $expr: {
-                                    $eq: ['$_id', '$$categoryId'],
+                                    $in: ['$_id', '$$categoryId'],
                                 },
                             },
                         },
@@ -37,10 +37,9 @@ const listService = async (params) => {
                             },
                         },
                     ],
-                    as: 'category',
+                    as: 'categoryList',
                 },
             },
-            { $unwind: { path: '$category', preserveNullAndEmptyArrays: true } },
             {
                 $lookup: {
                     from: 'carts',
@@ -63,42 +62,59 @@ const listService = async (params) => {
                 },
             },
             {
+                $lookup: {
+                    from: 'wishList',
+                    let: {
+                        productId: '$_id',
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ['$productId', '$$productId'] },
+                                        { $eq: ['$userId', params.loginUserId] },
+                                    ],
+                                },
+                            },
+                        },
+                    ],
+                    as: 'wishList',
+                },
+            },
+            {
                 $project: {
                     _id: 1,
                     name: 1,
                     description: 1,
                     image: { $cond: ['$image', '$image', null] },
                     price: 1,
-                    foodType: 1,
                     availableType: 1,
                     status: 1,
-                    categoryId: 1,
-                    subCategoryId: 1,
-                    includeGst: 1,
-                    enable: 1,
-                    categoryName: { $cond: ['$category.name', '$category.name', 'NA'] },
-                    categoryValue: { $cond: ['$category.value', '$category.value', 'NA'] },
-                    categoryStatus: { $cond: ['$category.status', '$category.status', 0] },
-                    categoryEnable: { $cond: ['$category.enable', '$category.enable', false] },
+                    category: 1,
+                    gstPercent: 1,
+                    categoryList: 1,
                     cartCount: { $cond: [{ $arrayElemAt: ['$cart.itemCount', 0] }, { $arrayElemAt: ['$cart.itemCount', 0] }, 0] },
+                    isWishListed: { $cond: [{ $arrayElemAt: ['$wishList._id', 0] }, true, false] },
+                    stockCount: 1,
                 },
 
             },
             {
                 $sort: params.sortCondition,
             },
-            // {
-            //     $facet: {
-            //         paginatedResults: [{
-            //             $skip: params.skipCondition,
-            //         }, {
-            //             $limit: params.limitCondition,
-            //         }],
-            //         totalCount: [{
-            //             $count: 'count',
-            //         }],
-            //     },
-            // },
+            {
+                $facet: {
+                    paginatedResults: [{
+                        $skip: params.skipCondition,
+                    }, {
+                        $limit: params.limitCondition,
+                    }],
+                    totalCount: [{
+                        $count: 'count',
+                    }],
+                },
+            },
         ],
     );
     return list;

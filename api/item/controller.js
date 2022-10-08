@@ -8,8 +8,9 @@ const dbService = require('../../system/db/dbService');
 const utilsChecks = require('../../system/utils/checks');
 
 const addItem = async (fileParams, params) => {
-    if (Object.keys(fileParams).length > 0 && fileParams.image.length > 0) {
-        params.image = `item-uploads/${fileParams.image[0].filename}`;
+    if (Object.keys(fileParams).length && fileParams.image && fileParams.image.length) {
+        params.image = [];
+        fileParams.image.map((x) => params.image.push(x.path));
     }
     const add = await dbService.addService('item', params);
     if (!add) {
@@ -23,32 +24,52 @@ const addItem = async (fileParams, params) => {
     return result;
 };
 
+const arrayConvertor = (params, convertFields, splitValue) => {
+    const paramsLength = Object.keys(params).length;
+    const convertFieldLength = convertFields.length;
+    if (paramsLength > 0 && convertFieldLength > 0) {
+        for (const convertField of convertFields) {
+            if (params[convertField]) {
+                params[convertField] = params[convertField].split(splitValue);
+                params[convertField] = [...new Set(params[convertField])];
+            }
+        }
+    }
+};
+
 const facadeFunction = (params) => {
     const matchCond = {
         status: 1,
     };
-    if (params.enable || params.enable === false) {
-        matchCond.enable = params.enable;
+    if (params.available) {
+        matchCond.stockCount = {
+            $gte: 1,
+        };
+    }
+    if (params.category) {
+        arrayConvertor(params, ['category'], ',');
+        matchCond.category = {
+            $in: params.category,
+        };
     }
     const sortCond = {};
     const { sortBy } = params;
     const { sortDir } = params;
-    const sortArray = ['name', 'createdAt']; // array list to sort
+    const sortArray = ['name', 'price', 'createdAt']; // array list to sort
 
     if (sortBy && sortArray.indexOf(sortBy) >= 0) {
         sortCond[sortBy] = (sortDir !== null && sortDir !== '' && sortDir === 'desc') ? -1 : 1;
     } else {
         sortCond.createdAt = -1;
     }
-    // const skipCond = params.offset * params.limit;
-    // params.offset = params.offset ? params.offset : 0;
-    // params.limit = params.limit ? params.limit : 10;
+    params.offset = params.offset ? params.offset : 0;
+    params.limit = params.limit ? params.limit : 10;
     const facetParams = {
         matchCondition: matchCond,
         sortCondition: sortCond,
         loginUserId: dbService.ObjectId(params.userId.toString()),
-        // skipCondition: params.offset * params.limit,
-        // limitCondition: params.limit,
+        skipCondition: queryParams.offset * queryParams.limit,
+        limitCondition: queryParams.limit,
     };
     return facetParams;
 };
@@ -89,6 +110,10 @@ const updateItem = async (pathParams, fileParams, bodyParams) => {
     };
     if (Object.keys(fileParams).length > 0 && fileParams.image.length > 0) {
         bodyParams.image = `item-uploads/${fileParams.image[0].filename}`;
+    }
+    if (Object.keys(fileParams).length && fileParams.image && fileParams.image.length) {
+        bodyParams.image = [];
+        fileParams.image.map((x) => bodyParams.image.push(x.path));
     }
     const itemDetail = await dbService.checkExists('item', getParams);
     if (isEmpty(itemDetail) || !itemDetail) {

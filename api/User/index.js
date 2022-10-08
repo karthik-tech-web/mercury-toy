@@ -63,6 +63,6 @@ const userSchema = new Schema({
     timestamps: true,
 });
 
-const getModel = async() => dbConn.model('user', userSchema, 'users');
+const getModel = async () => dbConn.model('user', userSchema, 'users');
 
 module.exports = { getModel };

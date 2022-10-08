@@ -28,8 +28,7 @@ module.exports.addItem = {
 
 module.exports.getItemList = {
     query: joi.object().keys({
-        type: joi.number().allow('', null).optional(), // 1.category list 2.subCategory list
-        categoryId: joi.string().allow('', null).optional(),
+        category: joi.string().allow('', null).optional(),
         userId: joi.string().required(),
         enable: joi.boolean().allow('', null).optional(),
         tenantId: joi.string().required(),
