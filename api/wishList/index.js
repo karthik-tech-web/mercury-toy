@@ -6,7 +6,7 @@ const dataSchema = new Schema({
         type: Schema.ObjectId,
         auto: true,
     },
-    itemId: {
+    productId: {
         type: Schema.Types.ObjectId,
         ref: 'item',
     },
