@@ -23,7 +23,7 @@ const arrayConvertor = (params, convertFields, splitValue) => {
 const addItem = async (fileParams, params) => {
     if (Object.keys(fileParams).length && fileParams.image && fileParams.image.length) {
         params.image = [];
-        fileParams.image.map((x) => params.image.push(x.path));
+        fileParams.image.map((x) => params.image.push(`item-uploads/${x.filename}`));
     }
     arrayConvertor(params, ['category', ',']);
     const add = await dbService.addService('item', params);
@@ -109,12 +109,12 @@ const updateItem = async (pathParams, fileParams, bodyParams) => {
     const getParams = {
         _id: Object(pathParams.itemId.toString()),
     };
-    if (Object.keys(fileParams).length > 0 && fileParams.image.length > 0) {
-        bodyParams.image = `item-uploads/${fileParams.image[0].filename}`;
-    }
+    // if (Object.keys(fileParams).length > 0 && fileParams.image.length > 0) {
+    //     bodyParams.image = `item-uploads/${fileParams.image[0].filename}`;
+    // }
     if (Object.keys(fileParams).length && fileParams.image && fileParams.image.length) {
         bodyParams.image = [];
-        fileParams.image.map((x) => bodyParams.image.push(x.path));
+        fileParams.image.map((x) => bodyParams.image.push((`item-uploads/${x.filename}`));
     }
     const itemDetail = await dbService.checkExists('item', getParams);
     if (isEmpty(itemDetail) || !itemDetail) {
