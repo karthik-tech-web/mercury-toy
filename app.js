@@ -70,7 +70,7 @@ app.get('/api/health', (req, res) => {
 app.use(middlewareConfig.tenantCheck);
 
 // protected routes
-app.use(firebaseApi.verifyIdToken);
+// app.use(firebaseApi.verifyIdToken);
 
 app.use(initScope);
 app.use('/api/auth', authRoutes);

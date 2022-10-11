@@ -8,14 +8,14 @@ module.exports.options = {
 
 module.exports.add = {
     body: joi.object().keys({
-        itemId: joi.string().required(),
+        productId: joi.string().required(),
         userId: joi.string().required(),
     }),
 };
 
 module.exports.remove = {
     body: joi.object().keys({
-        itemId: joi.string().required(),
+        productId: joi.string().required(),
         userId: joi.string().required(),
     }),
 };

@@ -14,20 +14,7 @@ const categorySchema = new Schema({
     value: String,
     status: {
         type: Number,
-        default: 1,
-    },
-    enable: {
-        type: Boolean,
-        default: false,
-    },
-    parentCategoryId: {
-        type: Schema.Types.ObjectId,
-        ref: 'category',
-        default: null,
-    },
-    categoryType: {
-        type: Number,
-        default: 1,
+        default: 1, // 1.available 2.disable 
     },
     image: {
         type: String,

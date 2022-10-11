@@ -10,30 +10,36 @@ components:
          _id:
            type: string
            format: ObjectId
-         geoLocation:
+         fullName:
            type: string
-           description: geoLocation
+           description: fullName
          address1:
            type: string
            description: address1
          address2:
            type: string
            description: address2
-         landMark:
+         city:
+           type: string
+           description: landMark
+         state:
+           type: string
+           description: address1
+         pincode:
+           type: string
+           description: address2
+         phoneNo:
            type: string
            description: landMark
          addressType:
            type: number
-           description: addressType // 1.Home 2.Work 3.Friends or Family 4.others
-         otherUserName:
+           description: addressType // 1.Home 2.Work 3.others
+         alternatePhn:
            type: string
-           description: otherUserName // if address choosed for others
-         receiverName:
+           description: user alternate mobile number
+         landMark:
            type: string
-           description: receiverName // if address choosed for friends or family
-         receiverPhoneNo:
-           type: string
-           description: receiverPhoneNo // if address choosed for friends or family
+           description: landMark
          defaultAddress:
            type: boolean
            description: defaultAddress
@@ -65,8 +71,8 @@ paths:
           schema:
             type: object
             properties:
-              geoLocation:
-                description: geoLocation
+              fullName:
+                description: fullName
                 in: body
                 required: true
                 type: string
@@ -81,6 +87,38 @@ paths:
                 in: body
                 type: string
                 example: address2
+              city:
+                description: city
+                in: body
+                type: string
+                required: true
+              state:
+                description: state
+                in: body
+                type: string
+                required: true
+              pincode:
+                description: pincode
+                in: body
+                required: true
+                type: string
+                example: 123456
+              otherUserName:
+                description: otherUserName
+                in: body
+                type: string
+                example: otherUserName
+              receiverName:
+                description: receiverName
+                in: body
+                type: string
+                example: receiverName
+              receiverPhoneNo:
+                description: receiverPhoneNo
+                in: body
+                required: true
+                type: string
+                example: 123456
               landMark:
                 description: landMark
                 in: body
@@ -99,22 +137,6 @@ paths:
                 required: true
                 type: string
                 example: true
-              otherUserName:
-                description: otherUserName
-                in: body
-                type: string
-                example: otherUserName
-              receiverName:
-                description: receiverName
-                in: body
-                type: string
-                example: receiverName
-              receiverPhoneNo:
-                description: receiverPhoneNo
-                in: body
-                required: true
-                type: string
-                example: 123456
               userId:
                 description: userId
                 in: body

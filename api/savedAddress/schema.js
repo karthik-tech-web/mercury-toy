@@ -60,7 +60,6 @@ module.exports.update = {
         addressType: joi.number().required(),
         landMark: joi.string().allow('', null).optional(),
         defaultAddress: joi.boolean().required(),
-        userId: joi.string().required(),
     }),
     params: {
         addressId: joi.string().required(),

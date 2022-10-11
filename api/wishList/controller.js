@@ -5,7 +5,7 @@ const utilsChecks = require('../../system/utils/checks');
 
 const add = async (params) => {
     const insertParams = {
-        itemId: params.itemId,
+        productId: params.productId,
         userId: params.userId,
     };
     const wishDetails = await dbService.checkExists('wishList', insertParams);
@@ -33,7 +33,7 @@ const facatFunction = (pathParams, queryParams) => {
     const sortCond = {};
     const { sortBy } = queryParams;
     const { sortDir } = queryParams;
-    const sortArray = ['itemName', 'createdAt']; // array list to sort
+    const sortArray = ['productName', 'createdAt']; // array list to sort
     if (sortBy && sortArray.indexOf(sortBy) >= 0) {
         sortCond[sortBy] = (sortDir !== null && sortDir !== '' && sortDir === 'desc') ? -1 : 1;
     } else {
@@ -69,12 +69,12 @@ const getWishListByUser = async (pathParams, queryParams) => {
 
 const remove = async (params) => {
     const getParams = {
-        itemId: params.itemId,
+        productId: params.productId,
         userId: params.userId,
     };
-    const itemDetails = await dbService.checkExists('wishList', getParams);
-    if (!itemDetails || !itemDetails._id) {
-        throw boom.notFound('Item is not added to wishList');
+    const productDetails = await dbService.checkExists('wishList', getParams);
+    if (!productDetails || !productDetails._id) {
+        throw boom.notFound('Product is not added to wishList');
     }
     const details = await dbService.deleteService('wishList', getParams);
     if (!details) {
@@ -82,7 +82,7 @@ const remove = async (params) => {
     }
     const result = {
         status: 200,
-        message: 'Item removed Successfully',
+        message: 'Product removed Successfully',
     };
     return result;
 };

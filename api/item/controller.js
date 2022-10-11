@@ -7,23 +7,6 @@ const service = require('./service');
 const dbService = require('../../system/db/dbService');
 const utilsChecks = require('../../system/utils/checks');
 
-const addItem = async (fileParams, params) => {
-    if (Object.keys(fileParams).length && fileParams.image && fileParams.image.length) {
-        params.image = [];
-        fileParams.image.map((x) => params.image.push(x.path));
-    }
-    const add = await dbService.addService('item', params);
-    if (!add) {
-        throw boom.badRequest('Something went Wrong. Please Try again later.');
-    }
-    const result = {
-        status: 200,
-        message: 'Item added Successfully',
-        details: [add],
-    };
-    return result;
-};
-
 const arrayConvertor = (params, convertFields, splitValue) => {
     const paramsLength = Object.keys(params).length;
     const convertFieldLength = convertFields.length;
@@ -35,6 +18,24 @@ const arrayConvertor = (params, convertFields, splitValue) => {
             }
         }
     }
+};
+
+const addItem = async (fileParams, params) => {
+    if (Object.keys(fileParams).length && fileParams.image && fileParams.image.length) {
+        params.image = [];
+        fileParams.image.map((x) => params.image.push(x.path));
+    }
+    arrayConvertor(params, ['category', ',']);
+    const add = await dbService.addService('item', params);
+    if (!add) {
+        throw boom.badRequest('Something went Wrong. Please Try again later.');
+    }
+    const result = {
+        status: 200,
+        message: 'Item added Successfully',
+        details: [add],
+    };
+    return result;
 };
 
 const facadeFunction = (params) => {
@@ -68,8 +69,8 @@ const facadeFunction = (params) => {
         matchCondition: matchCond,
         sortCondition: sortCond,
         loginUserId: dbService.ObjectId(params.userId.toString()),
-        skipCondition: queryParams.offset * queryParams.limit,
-        limitCondition: queryParams.limit,
+        skipCondition: params.offset * params.limit,
+        limitCondition: params.limit,
     };
     return facetParams;
 };

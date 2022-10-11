@@ -19,21 +19,10 @@ components:
            type: string
            format: string
            description: value of the category
-         categoryType:
-           type: number
-           format: number
-           description: categoryType of category
-         parentCategoryId:
-           type: string
-           format: ObjectId
-           description: parentCategoryId of the category
          status:
            type: number
            format: number
            description: status of category
-         enable:
-           type: boolean
-           description: enable category
          image:
            type: Array
            format: Array
@@ -59,9 +48,7 @@ components:
           _id: 5f8e8aec08f60970124cc24f
           name: test Category
           value: test_category
-          categoryType: 1
           status: 1
-          enable: true
           createdBy: 5f8e8aec08f60970124cc24f
           updatedBy: 5f8e8aec08f60970124cc24f
           createdAt: '2021-12-13T10:31:02.583+00:00'
@@ -95,22 +82,6 @@ paths:
                 required: true
                 type: string
                 example: value
-              enable:
-                description: value
-                in: body
-                required: true
-                type: boolean
-                example: true
-              parentCategoryId:
-                description: value
-                in: body
-                type: string
-              categoryType:
-                description: categoryType
-                in: body
-                required: true
-                type: number
-                example: 1
               status:
                 description: status
                 in: body
@@ -218,22 +189,6 @@ paths:
                 required: true
                 type: string
                 example: value
-              enable:
-                description: value
-                in: body
-                required: true
-                type: boolean
-                example: true
-              parentCategoryId:
-                description: value
-                in: body
-                type: string
-              categoryType:
-                description: categoryType
-                in: body
-                required: true
-                type: number
-                example: 1
               status:
                 description: status
                 in: body

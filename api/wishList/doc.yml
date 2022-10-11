@@ -11,7 +11,7 @@ components:
            type: string
            format: ObjectId
            description: wishListId
-         itemId:
+         productId:
            type: string
            format: ObjectId
            description: ID of product
@@ -31,7 +31,7 @@ components:
            description: Record last updated date time
        example:
           _id: 5f8e8aec08f60970124cc24f
-          itemId: N7vQTJyIdbNoHEKUDP5LYbhy95f2
+          productId: N7vQTJyIdbNoHEKUDP5LYbhy95f2
           userId: 5f8e8aec08f60970124cc24f
           createdAt: '2021-12-13T10:31:02.583+00:00'
           updatedAt: '2021-12-13T10:31:02.583+00:00'
@@ -53,7 +53,7 @@ paths:
           schema:
             type: object
             properties:
-              itemId:
+              productId:
                 description: itemId
                 in: body
                 required: true
@@ -91,8 +91,8 @@ paths:
           schema:
             type: object
             properties:
-              postId:
-                description: postId
+              productId:
+                description: productId
                 in: body
                 required: true
                 type: string

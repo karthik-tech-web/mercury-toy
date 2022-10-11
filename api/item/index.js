@@ -17,7 +17,7 @@ const collectionSchema = new Schema({
     },
     status: {
         type: Number,
-        default: 1, //1.active 2.inactive 
+        default: 1, //1.active 2.inactive 3.out of stock
     },
     category: {
         type: [Schema.Types.ObjectId],
