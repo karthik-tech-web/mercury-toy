@@ -114,7 +114,7 @@ const updateItem = async (pathParams, fileParams, bodyParams) => {
     // }
     if (Object.keys(fileParams).length && fileParams.image && fileParams.image.length) {
         bodyParams.image = [];
-        fileParams.image.map((x) => bodyParams.image.push((`item-uploads/${x.filename}`));
+        fileParams.image.map((x) => bodyParams.image.push(`item-uploads/${x.filename}`));
     }
     const itemDetail = await dbService.checkExists('item', getParams);
     if (isEmpty(itemDetail) || !itemDetail) {

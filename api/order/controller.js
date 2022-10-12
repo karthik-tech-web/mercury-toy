@@ -17,7 +17,7 @@ const offerCalculation = (params) => {
     return orderAmount;
 };
 
-const vailidateOrderParams = async (params) => {
+const validateOrderParams = async (params) => {
     let totalActualAmount = 0;
     let totalOfferAmount = 0;
     const orderDetails = {};
@@ -57,7 +57,7 @@ const createOrder = async (bodyParams) => {
             throw boom.notFound('Invalid User Id');
         }
         bodyParams.orderDate = new Date();
-        const validateOrder = await vailidateOrderParams(bodyParams);
+        const validateOrder = await validateOrderParams(bodyParams);
         if (bodyParams.paymentGateway === 1 && bodyParams.orderId) {
             bodyParams.orderId = bodyParams.orderId;
         } else {
