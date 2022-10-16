@@ -41,23 +41,101 @@ const wishListByUser = async (params) => {
             },
         },
         { $unwind: { path: '$productDetail', preserveNullAndEmptyArrays: true } },
+        // {
+        //     $lookup: {
+        //         from: 'categories',
+        //         let: {
+        //             categoryId: '$productDetail.category',
+        //         },
+        //         pipeline: [
+        //             {
+        //                 $match: {
+        //                     $expr: {
+        //                         $in: ['$_id', '$$categoryId'],
+        //                     },
+        //                 },
+        //             },
+        //             {
+        //                 $project:
+        //                 {
+        //                     name: 1,
+        //                     value: 1,
+        //                     status: 1,
+        //                     enable: 1,
+        //                 },
+        //             },
+        //         ],
+        //         as: 'categoryList',
+        //     },
+        // },
+        {
+            $lookup: {
+                from: 'carts',
+                let: {
+                    productId: '$productDetail._id',
+                },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $and: [
+                                    { $eq: ['$productId', '$$productId'] },
+                                    { $eq: ['$userId', params.loginUserId] },
+                                ],
+                            },
+                        },
+                    },
+                ],
+                as: 'cart',
+            },
+        },
         {
             $project: {
-                _id: 1,
-                productId: '$productDetail._id',
-                productName: '$productDetail.name',
+                // productDetail: 1,
+                wishedId: '$_id',
+                _id: '$productDetail._id',
+                name: '$productDetail.name',
                 description: '$productDetail.description',
-                value: '$productDetail.value',
                 offerPrice: '$productDetail.offerPrice',
                 price: '$productDetail.price',
                 image: '$productDetail.image',
                 status: '$productDetail.status',
                 category: '$productDetail.category',
+                stockCount: '$productDetail.stockCount',
                 gstPercent: '$productDetail.gstPercent',
                 isWishListed: true,
-                createdAt: '$createdAt',
+                createdAt: 1,
+                cartCount: { $cond: [{ $arrayElemAt: ['$cart.itemCount', 0] }, { $arrayElemAt: ['$cart.itemCount', 0] }, 0] },
+                // categoryList: 1,
             },
         },
+        // {
+        //     $lookup: {
+        //         from: 'categories',
+        //         let: {
+        //             categoryId: '$cart',
+        //         },
+        //         pipeline: [
+        //             {
+        //                 $match: {
+        //                     $expr: {
+        //                         $in: ['$_id', '$$categoryId'],
+        //                     },
+        //                 },
+        //             },
+        //             {
+        //                 $project:
+        //                 {
+        //                     name: 1,
+        //                     value: 1,
+        //                     status: 1,
+        //                     enable: 1,
+        //                 },
+        //             },
+        //         ],
+        //         as: 'categoryList',
+        //     },
+        // },
         {
             $sort: params.sortCondition,
         },
