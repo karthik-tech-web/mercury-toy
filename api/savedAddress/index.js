@@ -28,7 +28,7 @@ const collecionSchema = new Schema({
     timestamps: true,
 });
 
-const getModel = async () => dbConn.models.savedAddress || dbConn.model('savedAddress', collecionSchema);
+const getModel = async () => dbConn.models.savedAddress || dbConn.model('savedAddress', collecionSchema, 'savedAddresses');
 
 module.exports = {
     getModel,

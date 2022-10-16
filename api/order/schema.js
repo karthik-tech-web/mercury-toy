@@ -43,7 +43,7 @@ module.exports.getOrderList = {
     query: joi.object().keys({
         userId: joi.string().allow('', null).optional(),
         orderStatus: joi.number().allow('', null).optional(),
-        foodStatus: joi.number().allow('', null).optional(),
+        productStatus: joi.number().allow('', null).optional(),
         sortBy: joi.string().allow(null, '').optional(),
         sortDir: joi.string().allow(null, '').optional(),
         limit: joi.number().required(),

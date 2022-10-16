@@ -1,6 +1,6 @@
 const index = require('./index');
 
-const listService = async(params) => {
+const listService = async (params) => {
     const Model = await index.getModel();
     const list = await Model.aggregate(
         [
@@ -16,7 +16,7 @@ const listService = async(params) => {
                     orderAmount: 1,
                     orderDate: 1,
                     orderProcessed: 1,
-                    foodStatus: 1,
+                    productStatus: 1,
                     paymentMethod: 1,
                     address: 1,
                     orderId: 1,

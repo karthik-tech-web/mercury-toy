@@ -32,7 +32,7 @@ components:
          orderProcessed:
            type: number
            description: order status // 0.pending 1.Success 2.Failure 3.Cancel 4.Refund
-         foodStatus:
+         productStatus:
            type: number
            description: food status // 0.pending 1.New 2.Accepted 3.outOfDelivery 4.Delivered
          status:
@@ -45,7 +45,7 @@ components:
           actualAmount: 100
           orderAmount: 100
           orderProcessed: 1
-          foodStatus: 2
+          productStatus: 2
           status: 1
           createdAt: '2021-12-13T10:31:02.583+00:00'
           updatedAt: '2021-12-13T10:31:02.583+00:00'

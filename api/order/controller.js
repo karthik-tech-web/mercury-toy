@@ -30,14 +30,13 @@ const validateOrderParams = async (params) => {
         } else {
             boom.badRequest('Invalid productCount');
         }
-        const productDetails = await dbService.checkExists('item', { _id: product[0] }, { name: 1, price: 1, enable: 1 });
-        if (!productDetails || !productDetails.enable) {
+        const productDetails = await dbService.checkExists('item', { _id: product[0] }, { name: 1, price: 1, status: 1, stockCount: 1 });
+        if (!productDetails || productDetails.status !== 1 || productDetails.stockCount < product[1]) {
             boom.badRequest('Remove Unavailable product to place Order');
         }
         const actualAmount = productDetails.price * product[1];
         const offerAmount = productDetails.price * product[1];
-        // orderProductDetails = orderProductDetails ? `${orderProductDetails} ${productDetails.name} x ${product[1]}<br>` : `${productDetails.name} x ${product[1]}<br>`;
-        orderProductDetails.push({ name: productDetails.name, itemCount: product[1], actualAmount, offerAmount });
+        orderProductDetails.push({ _id: productDetails._id, name: productDetails.name, itemCount: product[1], actualAmount, offerAmount });
         totalActualAmount += actualAmount;
         totalOfferAmount += offerAmount;
     }
@@ -78,7 +77,7 @@ const createOrder = async (bodyParams) => {
             paymentMethod: bodyParams.paymentMethod,
         };
         if (bodyParams.paymentMethod === 5) {
-            createOrderParams.foodStatus = 1;
+            createOrderParams.productStatus = 1;
             createOrderParams.orderProcessed = 1;
         }
         let create = await dbService.addService('order', createOrderParams);
@@ -119,8 +118,8 @@ const facadeFunction = (params) => {
     if (params.userId) {
         matchCondition.userId = ObjectId(params.userId.toString());
     }
-    if (params.foodStatus) {
-        matchCondition.foodStatus = params.foodStatus;
+    if (params.productStatus) {
+        matchCondition.productStatus = params.productStatus;
     }
     const sortCond = {};
 
@@ -208,10 +207,10 @@ const updateOrder = async (params) => {
         if (params.type === 1 && params.statusUpdate === 1) {
             updateOrderParams.orderProcessed = 3;
         } else if (params.type === 2) {
-            if (params.statusUpdate < 2 || orderDetails.foodStatus >= params.statusUpdate) {
+            if (params.statusUpdate < 2 || orderDetails.productStatus >= params.statusUpdate) {
                 throw boom.badRequest('Invalid Food status Update');
             } else {
-                updateOrderParams.foodStatus = params.statusUpdate;
+                updateOrderParams.productStatus = params.statusUpdate;
             }
         }
         await dbService.updateOneService('order', { _id: params.orderId }, updateOrderParams);

@@ -9,6 +9,13 @@ const { ObjectId } = mongoose.Types;
 const isArray = (a) => (!!a) && (a.constructor === Array);
 
 const checkExistFunction = async (checkExistParams) => {
+    const checkParams = { ...checkExistParams };
+    delete checkParams?.address2;
+    delete checkParams?.phoneNo;
+    delete checkParams?.alternatePhn;
+    delete checkParams?.addressType;
+    delete checkParams?.landMark;
+    delete checkParams?.defaultAddress;
     const checkList = await dbService.listService('savedAddress', checkExistParams);
     if (checkList && checkList.length > 0) {
         throw boom.badRequest('Address Already Exist.');
@@ -19,6 +26,9 @@ const updatedefaultAddress = async (params) => {
     const removeCond = {
         userId: params.userId,
         defaultAddress: true,
+        _id: {
+            $ne: params._id,
+        },
     };
     const removeUpdateParams = {
         defaultAddress: false,
@@ -33,7 +43,7 @@ const add = async (params) => {
         throw boom.badRequest('Something went wrong. Please try again.');
     }
     if (details.defaultAddress === true) {
-        await updatedefaultAddress(params);
+        await updatedefaultAddress(details);
     }
     const result = {
         status: 200,
@@ -105,7 +115,7 @@ const update = async (pathParams, bodyParams) => {
     }
     const detail = await dbService.updateOneService('savedAddress', getParams, bodyParams);
     if ((bodyParams.defaultAddress || bodyParams.defaultAddress === false) && bodyParams.defaultAddress !== details.defaultAddress) {
-        await updatedefaultAddress(bodyParams);
+        await updatedefaultAddress(detail);
     }
     const result = {
         status: 200,

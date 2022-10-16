@@ -29,7 +29,7 @@ const orderSchema = new Schema({
     // discountRate: Number,
     actualAmount: Number,
     orderAmount: Number,
-    paymentMethod : {
+    paymentMethod: {
         type: String,
         enum: Object.keys(config.paymentMethodObj),
     },
@@ -43,7 +43,7 @@ const orderSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user',
     },
-    foodStatus: {
+    productStatus: {
         type: Number,
         default: 0, // 0.pending 1.New 2.Accepted 3.outOfDelivery 4.Delivered
     },
@@ -59,6 +59,6 @@ const orderSchema = new Schema({
     timestamps: true,
 });
 
-const getModel = async() => dbConn.models.order || dbConn.model('order', orderSchema);
+const getModel = async () => dbConn.models.order || dbConn.model('order', orderSchema);
 
 module.exports = { getModel };

@@ -13,8 +13,6 @@ const { ObjectId } = mongoose.Types;
 
 const initiatePayment = async (params) => {
     try {
-        console.log('=======params=======>', params);
-        // console.log('=======insertParams=======>', insertParams);
         const add = await dbService.addService('payment', params);
         if (!add) {
             throw boom.badRequest('Something went wrong. Please try again.');
@@ -51,6 +49,20 @@ const removeProcessedCart = async (params) => {
     }
 };
 
+const updateProductStockCount = async (params) => {
+    try {
+        const productList = JSON.parse(params.productsName);
+        for (const product of productList) {
+            const updateStockCount = await dbService.updateOneService('item', { _id: product._id }, { $inc: { stockCount: -product.itemCount } });
+            if (!updateStockCount || !updateStockCount._id) {
+                console.log('Stock update went wrong.');
+            }
+        }
+    } catch (err) {
+        console.log('remove cart Err', err);
+    }
+};
+
 const successPayment = async (params) => {
     try {
         const matchCondition = {
@@ -59,7 +71,7 @@ const successPayment = async (params) => {
         };
         const paymentDetails = await dbService.checkExists('payment', matchCondition);
         if (isEmpty(paymentDetails) || !paymentDetails) {
-            throw boom.notFound('Invalid PaymentId');
+            throw boom.notFound('Invalid OrderId');
         } else if (paymentDetails.paymentStatus > 0) {
             throw boom.badRequest('Payment already Processed');
         } else if (paymentDetails.userId.toString() !== params.userId) {
@@ -85,13 +97,16 @@ const successPayment = async (params) => {
         const updateOrderParams = {
             orderProcessed: updateParams.paymentStatus,
             orderDate: paymentDate,
-            foodStatus: 1,
+            productStatus: 1,
         };
         const updateOrder = await dbService.updateOneService('order', updateOrderCondition, updateOrderParams);
         if (!updateOrder) {
             throw boom.badRequest('Something went wrong. Please try again.');
         }
         await removeProcessedCart(params);
+        if (updateParams.paymentStatus === 1) {
+            await updateProductStockCount(updateOrder);
+        }
         const result = {
             status: 200,
             message: 'Payment Received Successfully',
