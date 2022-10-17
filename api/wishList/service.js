@@ -101,7 +101,7 @@ const wishListByUser = async (params) => {
                 image: '$productDetail.image',
                 status: '$productDetail.status',
                 category: '$productDetail.category',
-                stockCount: '$productDetail.stockCount',
+                stockCount: { $cond: ['$productDetail.stockCount', '$productDetail.stockCount', 0] },
                 gstPercent: '$productDetail.gstPercent',
                 isWishListed: true,
                 createdAt: 1,
