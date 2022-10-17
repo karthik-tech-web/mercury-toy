@@ -19,8 +19,6 @@ const listService = async (params) => {
                 landMark: { $cond: ['$landMark', '$landMark', null] },
                 alternatePhn: { $cond: ['$alternatePhn', '$alternatePhn', null] },
                 addressType: 1,
-                receiverName: { $cond: ['$receiverName', '$receiverName', null] },
-                receiverPhoneNo: { $cond: ['$receiverPhoneNo', '$receiverPhoneNo', null] },
                 defaultAddress: { $cond: ['$defaultAddress', '$defaultAddress', false] },
                 createdAt: 1,
                 userId: 1,
