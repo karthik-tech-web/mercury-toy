@@ -41,33 +41,33 @@ const wishListByUser = async (params) => {
             },
         },
         { $unwind: { path: '$productDetail', preserveNullAndEmptyArrays: true } },
-        // {
-        //     $lookup: {
-        //         from: 'categories',
-        //         let: {
-        //             categoryId: '$productDetail.category',
-        //         },
-        //         pipeline: [
-        //             {
-        //                 $match: {
-        //                     $expr: {
-        //                         $in: ['$_id', '$$categoryId'],
-        //                     },
-        //                 },
-        //             },
-        //             {
-        //                 $project:
-        //                 {
-        //                     name: 1,
-        //                     value: 1,
-        //                     status: 1,
-        //                     enable: 1,
-        //                 },
-        //             },
-        //         ],
-        //         as: 'categoryList',
-        //     },
-        // },
+        {
+            $lookup: {
+                from: 'categories',
+                let: {
+                    categoryId: '$productDetail.category',
+                },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $in: ['$_id', '$$categoryId'],
+                            },
+                        },
+                    },
+                    {
+                        $project:
+                        {
+                            name: 1,
+                            value: 1,
+                            status: 1,
+                            enable: 1,
+                        },
+                    },
+                ],
+                as: 'categoryList',
+            },
+        },
         {
             $lookup: {
                 from: 'carts',
@@ -106,36 +106,9 @@ const wishListByUser = async (params) => {
                 isWishListed: true,
                 createdAt: 1,
                 cartCount: { $cond: [{ $arrayElemAt: ['$cart.itemCount', 0] }, { $arrayElemAt: ['$cart.itemCount', 0] }, 0] },
-                // categoryList: 1,
+                categoryList: 1,
             },
         },
-        // {
-        //     $lookup: {
-        //         from: 'categories',
-        //         let: {
-        //             categoryId: '$cart',
-        //         },
-        //         pipeline: [
-        //             {
-        //                 $match: {
-        //                     $expr: {
-        //                         $in: ['$_id', '$$categoryId'],
-        //                     },
-        //                 },
-        //             },
-        //             {
-        //                 $project:
-        //                 {
-        //                     name: 1,
-        //                     value: 1,
-        //                     status: 1,
-        //                     enable: 1,
-        //                 },
-        //             },
-        //         ],
-        //         as: 'categoryList',
-        //     },
-        // },
         {
             $sort: params.sortCondition,
         },
