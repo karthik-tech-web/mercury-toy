@@ -84,10 +84,13 @@ const updateOneService = async (indexType, updateCondtion, updateParams, disable
     return result;
 };
 
-const updateManyService = async (indexType, updateCondtion, updateParams) => {
+const updateManyService = async (indexType, updateCondtion, updateParams, disableUpsert = false) => {
     const options = {
         upsert: true,
     };
+    if (disableUpsert === true) {
+        delete options.upsert;
+    }
     const index = getCollectionIndex(indexType);
     const Model = await index.getModel();
     const result = await Model.updateMany(updateCondtion, updateParams, options);

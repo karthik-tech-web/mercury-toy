@@ -30,7 +30,7 @@ const validateOrderParams = async (params) => {
         } else {
             boom.badRequest('Invalid productCount');
         }
-        const productDetails = await dbService.checkExists('item', { _id: product[0] }, { name: 1, price: 1, status: 1, stockCount: 1 });
+        const productDetails = await dbService.checkExists('item', { _id: product[0] }, { name: 1, price: 1, status: 1, stockCount: 1, gstPercent: 1 });
         if (!productDetails || productDetails.status !== 1 || productDetails.stockCount < product[1]) {
             boom.badRequest('Remove Unavailable product to place Order');
         }

@@ -33,7 +33,7 @@ const updatedefaultAddress = async (params) => {
     const removeUpdateParams = {
         defaultAddress: false,
     };
-    await dbService.updateManyService('savedAddress', removeCond, removeUpdateParams, true);
+    await dbService.updateManyService('savedAddress', removeCond, removeUpdateParams);
 };
 
 const add = async (params) => {
