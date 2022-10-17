@@ -92,7 +92,7 @@ const getCartDetailsByUserId = async (params) => {
                         description: 1,
                         price: 1,
                         image: { $cond: ['$image', '$image', null] },
-                        stockCount: 1,
+                        stockCount: { $cond: ['$stockCount', '$stockCount', 0] },
                         status: 1,
                     },
                 },
