@@ -29,6 +29,9 @@ const orderSchema = new Schema({
     // discountRate: Number,
     actualAmount: Number,
     orderAmount: Number,
+    deliveryCharge: Number,
+    gstAmount: Number,
+    totalAmount: Number,
     paymentMethod: {
         type: String,
         enum: Object.keys(config.paymentMethodObj),

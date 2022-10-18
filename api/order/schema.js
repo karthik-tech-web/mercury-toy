@@ -13,6 +13,7 @@ module.exports.createOrder = {
         orderId: joi.when('paymentGateway', { is: 1, then: joi.string().required(), otherwise: joi.optional() }),
         address: joi.string().required(),
         addressId: joi.string().required(),
+        deliveryCharge: joi.number().required(),
     }),
     query: {
         tenantId: joi.string().required(),

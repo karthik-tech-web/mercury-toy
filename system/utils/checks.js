@@ -19,6 +19,8 @@ const isEmptyObject = (a) => (Object.keys(a).length === 0);
 
 const stringToDate = (a) => (new Date(a));
 
+const percent = (a, b) => (Math.round((a / 100) * b));
+
 module.exports = {
     isArray,
     isEmptyArray,
@@ -30,4 +32,5 @@ module.exports = {
     isObject,
     isEmptyObject,
     stringToDate,
+    percent,
 };

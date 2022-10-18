@@ -20,6 +20,7 @@ const offerCalculation = (params) => {
 const validateOrderParams = async (params) => {
     let totalActualAmount = 0;
     let totalOfferAmount = 0;
+    params.gstAmount = 0;
     const orderDetails = {};
     const productList = params.products.split('|');
     let orderProductDetails = [];
@@ -36,9 +37,11 @@ const validateOrderParams = async (params) => {
         }
         const actualAmount = productDetails.price * product[1];
         const offerAmount = productDetails.price * product[1];
+        const gstAmount = utilsChecks.percent(productDetails.price, productDetails.gstPercent);
         orderProductDetails.push({ _id: productDetails._id, name: productDetails.name, itemCount: product[1], actualAmount, offerAmount });
         totalActualAmount += actualAmount;
         totalOfferAmount += offerAmount;
+        params.gstAmount += gstAmount;
     }
     orderDetails.productDetails = JSON.stringify(orderProductDetails);
     if (totalActualAmount !== params.actualAmount) {
@@ -62,7 +65,6 @@ const createOrder = async (bodyParams) => {
         } else {
             bodyParams.orderId = `${bodyParams.userId}-${Date.now()}`;
         }
-
         const createOrderParams = {
             products: bodyParams.products,
             productsName: validateOrder.productDetails,
@@ -75,6 +77,9 @@ const createOrder = async (bodyParams) => {
             addressId: bodyParams.addressId,
             orderId: bodyParams.orderId,
             paymentMethod: bodyParams.paymentMethod,
+            deliveryCharge: bodyParams.deliveryCharge,
+            gstAmount: bodyParams.gstAmount,
+            totalAmount: (bodyParams.orderAmount + bodyParams.gstAmount + bodyParams.deliveryCharge),
         };
         if (bodyParams.paymentMethod === 5) {
             createOrderParams.productStatus = 1;
@@ -90,7 +95,7 @@ const createOrder = async (bodyParams) => {
             paymentMethod: bodyParams.paymentMethod,
             paymentGateway: bodyParams.paymentGateway,
             paymentDate: bodyParams.orderDate,
-            amount: bodyParams.orderAmount,
+            amount: createOrderParams.totalAmount,
             userIp: createOrderParams.userIp,
             userId: bodyParams.userId,
             orderId: bodyParams.orderId,

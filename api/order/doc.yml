@@ -25,6 +25,15 @@ components:
          orderAmount:
            type: number
            description: offer Amount
+         deliveryCharge:
+           type: string
+           description: delivery charge
+         gstAmount:
+           type: Number
+           description: gst amount
+         totalAmount:
+           type: number
+           description: total Amount
          userId:
            type: string
            format: ObjectId
@@ -44,6 +53,9 @@ components:
           discountCode: null
           actualAmount: 100
           orderAmount: 100
+          deliveryCharge: 1
+          gstAmount: 100
+          totalAmount: 201
           orderProcessed: 1
           productStatus: 2
           status: 1
@@ -89,6 +101,11 @@ paths:
                 type: number
               orderAmount:
                 description: totalOfferAmount
+                in: body
+                required: true
+                type: number
+              deliveryCharge:
+                description: deliveryCharge
                 in: body
                 required: true
                 type: number
