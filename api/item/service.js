@@ -97,6 +97,7 @@ const listService = async (params) => {
                     cartCount: { $cond: [{ $arrayElemAt: ['$cart.itemCount', 0] }, { $arrayElemAt: ['$cart.itemCount', 0] }, 0] },
                     isWishListed: { $cond: [{ $arrayElemAt: ['$wishList._id', 0] }, true, false] },
                     stockCount: { $cond: ['$stockCount', '$stockCount', 0] },
+                    createdAt: 1,
                 },
 
             },

@@ -26,6 +26,8 @@ module.exports.addItem = {
 module.exports.getItemList = {
     query: joi.object().keys({
         category: joi.string().allow('', null).optional(),
+        minPrice: joi.number().allow('', null).optional(),
+        maxPrice: joi.number().allow('', null).optional(),
         userId: joi.string().required(),
         available: joi.boolean().allow('', null).optional(),
         tenantId: joi.string().required(),

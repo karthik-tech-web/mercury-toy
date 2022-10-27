@@ -31,11 +31,11 @@ const getAppInfo = async (params) => {
 const updateInfo = async (pathParams, fileParams = {}, params = {}) => {
     if (Object.keys(fileParams).length) {
         if (fileParams.photo && fileParams.photo[0] && fileParams.photo[0].path) {
-            params.photoUrl = fileParams.photo[0].path;
+            params.photoUrl = `profile-uploads/${fileParams.photo[0].filename}`;
         }
         if (fileParams.gallery && fileParams.gallery.length) {
             params.gallery = [];
-            fileParams.gallery.map((x) => params.gallery.push(x.path));
+            fileParams.gallery.map((x) => params.gallery.push(`profile-uploads/${x.filename}`));
         }
     }
     if (params && Object.keys(params).length === 0) {

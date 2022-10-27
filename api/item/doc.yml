@@ -192,6 +192,14 @@ paths:
           in: query
           example: true
           type: boolean
+        - name: minPrice
+          description: minPrice
+          in: query
+          type: number
+        - name: maxPrice
+          description: maxPrice
+          in: query
+          type: number
       responses:
         200:
           description: Item List

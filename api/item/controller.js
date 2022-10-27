@@ -47,6 +47,16 @@ const facadeFunction = (params) => {
             $gte: 1,
         };
     }
+    // matchCond.price = {};
+    matchCond.price = {
+        $gte: 0,
+    };
+    if (params.minPrice) {
+        matchCond.price['$gte'] = params.minPrice;
+    }
+    if (params.maxPrice) {
+        matchCond.price['$lte'] = params.maxPrice;
+    }
     if (params.category) {
         arrayConvertor(params, ['category'], ',');
         matchCond.category = {
@@ -61,7 +71,7 @@ const facadeFunction = (params) => {
     if (sortBy && sortArray.indexOf(sortBy) >= 0) {
         sortCond[sortBy] = (sortDir !== null && sortDir !== '' && sortDir === 'desc') ? -1 : 1;
     } else {
-        sortCond.createdAt = -1;
+        sortCond.name = 1;
     }
     params.offset = params.offset ? params.offset : 0;
     params.limit = params.limit ? params.limit : 10;
