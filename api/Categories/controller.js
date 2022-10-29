@@ -73,13 +73,13 @@ const getCategory = async (params) => {
 };
 
 const updateCategory = async (pathParams, bodyParams, fileParams) => {
-    // if (Object.keys(fileParams).length) {
+    // if (fileParams.image && Object.keys(fileParams).length) {
     //     if (fileParams.image && fileParams.image.length) {
     //         params.image = [];
     //         fileParams.image.map((x) => params.image.push(x.path));
     //     }
     // }
-    if (Object.keys(fileParams).length > 0 && fileParams.image.length > 0) {
+    if (fileParams && Object.keys(fileParams) && Object.keys(fileParams).length > 0 && fileParams.image.length > 0) {
         bodyParams.image = `item-uploads/${fileParams.image[0].filename}`;
     }
     const getParams = {
