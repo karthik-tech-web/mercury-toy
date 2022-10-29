@@ -29,6 +29,7 @@ module.exports.getItemList = {
         minPrice: joi.number().allow('', null).optional(),
         maxPrice: joi.number().allow('', null).optional(),
         userId: joi.string().required(),
+        enable: joi.boolean().allow('', null).optional(),
         available: joi.boolean().allow('', null).optional(),
         tenantId: joi.string().required(),
     }),

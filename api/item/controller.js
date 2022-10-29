@@ -42,6 +42,11 @@ const facadeFunction = (params) => {
     const matchCond = {
         status: 1,
     };
+    if (params.enable === false) { 
+        matchCond.status = {
+            $in: [2, 3],
+        };
+    }
     if (params.available) {
         matchCond.stockCount = {
             $gte: 1,
