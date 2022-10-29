@@ -32,17 +32,11 @@ const addCategory = async (params, fileParams) => {
 
 const getCategoryList = async (queryParams) => {
     const categoryType = (queryParams.type && queryParams.type === 2) ? 'Subcategory' : 'Category';
-    let matchCondition = {};
-    if (queryParams.type && (queryParams.type === 1 || queryParams.type === 2)) {
-        matchCondition = {
-            categoryType: queryParams.type,
-        };
-    }
-    if (queryParams.enable || queryParams.enable === false) {
-        matchCondition.enable = queryParams.enable;
-    }
-    if (queryParams.type && queryParams.type === 2 && queryParams.categoryId) {
-        matchCondition.parentCategoryId = ObjectId(queryParams.categoryId.toString());
+    let matchCondition = {
+        status: 1,
+    };
+    if (queryParams.enable === false) {
+        matchCondition.status = { $ne: 1 };
     }
     const list = await service.listService(matchCondition);
     if (!utilsChecks.isArray(list) || list.length <= 0) {
