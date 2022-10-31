@@ -42,7 +42,7 @@ const facadeFunction = (params) => {
     const matchCond = {
         status: 1,
     };
-    if (params.enable === false) { 
+    if (params.enable === false) {
         matchCond.status = {
             $in: [2, 3],
         };
@@ -52,7 +52,6 @@ const facadeFunction = (params) => {
             $gte: 1,
         };
     }
-    // matchCond.price = {};
     matchCond.price = {
         $gte: 0,
     };
@@ -64,6 +63,9 @@ const facadeFunction = (params) => {
     }
     if (params.category) {
         arrayConvertor(params, ['category'], ',');
+        if (utilsChecks.isArray(params.category) && params.category.length) {
+            params.category = params.category.map((x) => dbService.ObjectId(x.toString()));
+        }
         matchCond.category = {
             $in: params.category,
         };
