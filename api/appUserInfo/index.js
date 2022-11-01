@@ -36,6 +36,18 @@ const dataSchema = new Schema({
     openingTime: Date,
     closingTime: Date,
     gelocation: String,
+    defaultGst: {
+        type: Number,
+        default: 18,
+    },
+    dc_chennai: {
+        type: Number,
+        default: 50,
+    },
+    dc_outerChennai: {
+        type: Number,
+        default: 100,
+    },
     active: {
         type: Boolean,
         default: true,

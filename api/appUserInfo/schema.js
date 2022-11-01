@@ -30,6 +30,9 @@ module.exports.updateInfo = {
         closingTime: joi.string().optional(),
         gelocation: joi.string().optional(),
         active: joi.boolean().optional(),
+        defaultGst: joi.number().optional(),
+        dc_chennai: joi.number().optional(),
+        dc_outerChennai: joi.number().optional(),
     }),
     params: joi.object().keys({
         infoId: joi.string().required(),
