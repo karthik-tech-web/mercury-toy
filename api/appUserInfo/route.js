@@ -11,6 +11,6 @@ const uploadFields = [{ name: 'photo', maxCount: 1 }, { name: 'gallery', maxCoun
 
 router.get('/', celebrate(schema.getAppInfo, schema.options), c(controller.getAppInfo, (req, res, next) => [req.params]));
 
-router.put('/update/:infoId', fileUpload('PROFILE_IMAGE', uploadFields), celebrate(schema.updateInfo, schema.options), c(controller.updateInfo, (req, res, next) => [req.params, req.files, req.body]));
+router.put('/:infoId', fileUpload('PROFILE_IMAGE', uploadFields), celebrate(schema.updateInfo, schema.options), c(controller.updateInfo, (req, res, next) => [req.params, req.files, req.body]));
 
 module.exports = router;
