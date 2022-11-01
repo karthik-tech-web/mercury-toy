@@ -53,7 +53,7 @@ module.exports.updateItem = {
         description: joi.string().required(),
         price: joi.number().required(),
         offerPrice: joi.number().allow('', null).optional(),
-        category: joi.array().required(),
+        category: joi.string().required(),
         stockCount: joi.number().required(),
         gstPercent: joi.number().allow('', null).optional(),
         status: joi.number().allow('', null).optional(),
