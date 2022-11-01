@@ -137,6 +137,7 @@ const updateItem = async (pathParams, fileParams, bodyParams) => {
     if (isEmpty(itemDetail) || !itemDetail) {
         throw boom.notFound('Invalid Item');
     }
+    arrayConvertor(params, ['category', ',']);
     const detail = await dbService.updateOneService('item', getParams, bodyParams);
     const result = {
         status: 200,
