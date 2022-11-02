@@ -29,6 +29,12 @@ const getAppInfo = async (params) => {
 };
 
 const updateInfo = async (pathParams, fileParams = {}, params = {}) => {
+    if (params.dcChennai && parseInt(params.dcChennai, 10) !== 'NAN') {
+        params.dcChennai = parseInt(params.dcChennai, 10);
+    }
+    if (params.dcOuterChennai && parseInt(params.dcOuterChennai, 10) !== 'NAN') {
+        params.dcOuterChennai = parseInt(params.dcChennai, 10);
+    }
     if (Object.keys(fileParams).length) {
         if (fileParams.photo && fileParams.photo[0] && fileParams.photo[0].path) {
             params.photoUrl = `profile-uploads/${fileParams.photo[0].filename}`;

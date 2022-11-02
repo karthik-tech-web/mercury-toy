@@ -31,8 +31,8 @@ module.exports.updateInfo = {
         gelocation: joi.string().optional(),
         active: joi.boolean().optional(),
         defaultGst: joi.number().optional(),
-        dc_chennai: joi.number().optional(),
-        dc_outerChennai: joi.number().optional(),
+        dcChennai: joi.string().optional(),
+        dcOuterChennai: joi.string().optional(),
     }),
     params: joi.object().keys({
         infoId: joi.string().required(),
