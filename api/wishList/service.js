@@ -34,6 +34,7 @@ const wishListByUser = async (params) => {
                         status: 1,
                         category: 1,
                         gstPercent: 1,
+                        stockCount: 1,
                     },
                 },
                 ],
