@@ -2,7 +2,7 @@ const boom = require('@hapi/boom');
 const isEmpty = require('lodash.isempty');
 const fs = require('fs');
 const path = require('path');
-const mongoose = require('mongoose');
+const randomToken = require('random-token');
 const service = require('./service');
 const dbService = require('../../system/db/dbService');
 const utilsChecks = require('../../system/utils/checks');
@@ -20,11 +20,32 @@ const arrayConvertor = (params, convertFields, splitValue) => {
     }
 };
 
+const checkCodeExists = async (params) => {
+    let itemDetails = await dbService.checkExists('item', params);
+    if (!itemDetails || !itemDetails._id) {
+        return false;
+    }
+    return true;
+};
+
+const generatecode = async () => {
+    const rt = randomToken.gen('abcdefghijklmnopqrstuvwxyz123456789');
+    const uniqueCode = rt(6);
+    const code = { sku: uniqueCode };
+    if (await checkCodeExists(code)) {
+        await generatecode();
+    } else {
+        return uniqueCode;
+    }
+};
+
+
 const addItem = async (fileParams, params) => {
     if (Object.keys(fileParams).length && fileParams.image && fileParams.image.length) {
         params.image = [];
         fileParams.image.map((x) => params.image.push(`item-uploads/${x.filename}`));
     }
+    params.sku = await generatecode();
     arrayConvertor(params, ['category', ',']);
     const add = await dbService.addService('item', params);
     if (!add) {

@@ -36,6 +36,7 @@ const dataSchema = new Schema({
     openingTime: String,
     closingTime: String,
     gelocation: String,
+    instantDeliveryCharge: Number,
     defaultGst: {
         type: Number,
         default: 18,

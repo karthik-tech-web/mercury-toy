@@ -40,6 +40,7 @@ const paymentRoutes = require('./api/payment/route');
 const pushNotificationRoutes = require('./api/pushNotification/route');
 const appAdminInfoRoutes = require('./api/appUserInfo/route');
 const wishListRoutes = require('./api/wishList/route');
+const brandRoutes = require('./api/brands/route');
 
 app.use('/item-uploads', express.static(path.join(__dirname, '/item-uploads')));
 app.use('/profile-uploads', express.static(path.join(__dirname, '/profile-uploads')));
@@ -89,6 +90,7 @@ app.use('/api/payment', paymentRoutes);
 app.use('/api/app-admin-info', appAdminInfoRoutes);
 app.use('/api/push-notification', pushNotificationRoutes);
 app.use('/api/wish-list', wishListRoutes);
+app.use('/api/brand', brandRoutes);
 
 // eslint-disable-next-line no-unused-vars
 app.use((req, res, next) => {

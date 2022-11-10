@@ -1,0 +1,107 @@
+tags:
+  name: brands
+  description: brand management
+
+components:
+   schemas:
+     brands:
+       type: object
+       properties:
+         _id:
+           type: string
+           format: ObjectId
+         name:
+           type: string
+           description: name
+         status:
+           type: number
+           format: number
+           description: brad status
+       example:
+          _id: 5f8e8aec08f60970124cc24f
+          name: name
+          status: 1
+
+paths:
+  /brand:
+    post:
+      tags:
+        - brands
+      summary: brands
+      description: Add a Cart
+      produces:
+        - application/json
+      # parameters:
+      requestBody:
+        description: Add a Cart
+        content:
+         application/json:
+          schema:
+            type: object
+            properties:
+              products:
+                description: products
+                in: body
+                required: true
+                type: string
+                example: 61dd3c3a1626be001b85ed4e~1|61dd3c3a1626be001b85ed4e~2
+              userId:
+                description: userId
+                in: body
+                required: true
+                type: string
+                example: 61c30ba30db86c001beaf395
+      responses:
+        200:
+          description: Cart added Successfully 
+        400:
+          description: Something went wrong. Please try again.
+        409:
+          description: Something went wrong. Please try again.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+    delete:
+      tags:
+        - brands
+      summary: delete brand
+      description: Delete a brand
+      produces:
+        - application/json
+      parameters:
+        - name: brandId
+          description: brandId
+          in: path
+          required: true
+          example: 60b0ae218a595c0011b13f78
+          type: string
+      requestBody:
+      responses:
+        200:
+          description: Brand deleted successfully
+        400:
+          description: Something Went Wrong. Please Try again later.
+        404:
+          description: Invalid BrandId.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []
+
+  /brand/list:
+    get:
+      tags:
+        - brands
+      summary: brand List
+      description: Get brand List
+      responses:
+        200:
+          description: brand Details
+        404:
+          description: No brand Found.
+        500:
+          description: Internal Server Error
+      security :
+        - BearerAuth: []

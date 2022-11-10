@@ -32,6 +32,12 @@ const orderSchema = new Schema({
     deliveryCharge: Number,
     gstAmount: Number,
     totalAmount: Number,
+    instantDelivery: {
+        type: Boolean,
+        default: false,
+    },
+    trakingId: String,
+    courierUrl: String,
     paymentMethod: {
         type: String,
         enum: Object.keys(config.paymentMethodObj),

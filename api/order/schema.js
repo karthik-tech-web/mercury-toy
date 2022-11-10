@@ -25,6 +25,8 @@ module.exports.updateOrder = {
         orderId: joi.string().required(),
         type: joi.number().required(),
         statusUpdate: joi.number().required(),
+        trakingId: joi.when('statusUpdate', { is: 3, then: joi.string().required(), otherwise: joi.optional() }),
+        courierUrl: joi.when('statusUpdate', { is: 3, then: joi.string().required(), otherwise: joi.optional() }),
     }),
     query: {
         tenantId: joi.string().required(),

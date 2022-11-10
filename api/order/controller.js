@@ -31,14 +31,14 @@ const validateOrderParams = async (params) => {
         } else {
             boom.badRequest('Invalid productCount');
         }
-        const productDetails = await dbService.checkExists('item', { _id: product[0] }, { name: 1, price: 1, status: 1, stockCount: 1, gstPercent: 1 });
+        const productDetails = await dbService.checkExists('item', { _id: product[0] }, { name: 1, sku: 1, price: 1, status: 1, stockCount: 1, gstPercent: 1 });
         if (!productDetails || productDetails.status !== 1 || productDetails.stockCount < product[1]) {
             boom.badRequest('Remove Unavailable product to place Order');
         }
         const actualAmount = productDetails.price * product[1];
         const offerAmount = productDetails.price * product[1];
         const gstAmount = utilsChecks.percent(productDetails.price, productDetails.gstPercent);
-        orderProductDetails.push({ _id: productDetails._id, name: productDetails.name, itemCount: product[1], actualAmount, offerAmount });
+        orderProductDetails.push({ _id: productDetails._id, name: productDetails.name, sku: productDetails.sku, unitPrice: productDetails.price, itemCount: product[1], actualAmount, offerAmount });
         totalActualAmount += actualAmount;
         totalOfferAmount += offerAmount;
         params.gstAmount += gstAmount;
@@ -78,6 +78,7 @@ const createOrder = async (bodyParams) => {
             orderId: bodyParams.orderId,
             paymentMethod: bodyParams.paymentMethod,
             deliveryCharge: bodyParams.deliveryCharge,
+            instantDelivery: bodyParams.instantDelivery ? bodyParams.instantDelivery : false,
             gstAmount: bodyParams.gstAmount,
             totalAmount: (bodyParams.orderAmount + bodyParams.gstAmount + bodyParams.deliveryCharge),
         };
@@ -201,7 +202,6 @@ const orderDetails = async (params) => {
 const updateOrder = async (params) => {
     try {
         const orderDetails = await dbService.checkExists('order', { _id: params.orderId });
-        console.log('========orderDetails======>', orderDetails);
         if (isEmpty(orderDetails) || !orderDetails) {
             throw boom.notFound('Invalid Order');
         }

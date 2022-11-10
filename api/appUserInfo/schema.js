@@ -27,6 +27,7 @@ module.exports.updateInfo = {
         openingDay: joi.string().optional(),
         closingDay: joi.string().optional(),
         openingTime: joi.string().optional(),
+        instantDeliveryCharge: joi.number().optional(),
         closingTime: joi.string().optional(),
         gelocation: joi.string().optional(),
         active: joi.boolean().optional(),
