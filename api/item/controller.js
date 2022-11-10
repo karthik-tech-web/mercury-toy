@@ -82,6 +82,16 @@ const facadeFunction = (params) => {
     if (params.maxPrice) {
         matchCond.price['$lte'] = params.maxPrice;
     }
+    if (params.ageRange) {
+        matchCond.ageRange = {
+            $gte: params.ageRange,
+        };
+        if (params.ageRange === 1 || params.ageRange === 3) {
+            matchCond.ageRange = {
+                $eq: params.ageRange,
+            };
+        }
+    }
     if (params.category) {
         arrayConvertor(params, ['category'], ',');
         if (utilsChecks.isArray(params.category) && params.category.length) {
